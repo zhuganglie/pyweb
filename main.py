@@ -3,6 +3,7 @@ import glob
 import markdown
 from fasthtml.common import *
 import frontmatter
+from post_template import post_detail_template
 
 app, rt = fast_app()
 
@@ -33,6 +34,7 @@ def post_detail(filename: str):
     with open(os.path.join(POSTS_DIR, filename), 'r') as f:
         content = f.read()
         html_content = markdown.markdown(content)
-    return Titled("Post Detail", Div(NotStr(html_content)))
+    post = frontmatter.load(os.path.join(POSTS_DIR, filename))
+    return Titled("Post Detail", post_detail_template(post['title'], post.get('date', 'No Date'), post.get('tags', []), html_content))
 
 serve()
