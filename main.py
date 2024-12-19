@@ -4,6 +4,7 @@ import markdown
 from fasthtml.common import *
 import frontmatter
 from post_template import post_detail_template
+import datetime
 
 def navbar():
     return Div(
@@ -40,6 +41,7 @@ def get_posts():
                 'filename': os.path.basename(filepath),
                 'tags': post.get('tags', [])
             })
+    posts.sort(key=lambda post: datetime.datetime.strptime(post['date'], '%Y-%m-%d') if post['date'] != 'No Date' else datetime.datetime.min, reverse=True)
     return posts
 
 @rt("/")
