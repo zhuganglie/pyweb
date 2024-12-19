@@ -10,7 +10,7 @@ def navbar():
         A("Home", href="/"),
         " | ",
         A("Tags", href="/tags"),
-        style="text-align: center;"
+        style="text-align: left; margin-bottom: 25px;"
     )
 
 app, rt = fast_app(
@@ -45,7 +45,7 @@ def get():
     post_items = [Div(H2(A(post['title'], href=f"/posts/{post['filename']}")),
                       P(f"Date: {post['date']}"),
                       P(f"Tags: {', '.join(post['tags'])}")) for post in posts]
-    return Titled("Blog Home", Div(navbar(), *post_items))
+    return Titled("Pyrrho's Blog", Div(navbar(), *post_items))
 
 @rt("/posts/{filename}")
 def post_detail(filename: str):
