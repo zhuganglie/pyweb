@@ -42,8 +42,8 @@ def get():
 def post_detail(filename: str):
     with open(os.path.join(POSTS_DIR, filename), 'r') as f:
         content = f.read()
-        html_content = markdown.markdown(content)
     post = frontmatter.load(os.path.join(POSTS_DIR, filename))
+    html_content = markdown.markdown(post.content)
     return Titled("", post_detail_template(post['title'], post.get('date', 'No Date'), post.get('tags', []), html_content))
 
 serve()
