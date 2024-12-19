@@ -8,7 +8,7 @@ def post_detail_template(title, date, tags, content):
             **{"class": "text-center"}
         ),
         Div(content, **{"class": "my-4"}),
-        P(f"Tags: {tags}")
+        P(f"Tags: {', '.join(tags)}", **{"class": "text-gray-500 text-left"})
     )
           
     
