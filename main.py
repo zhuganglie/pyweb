@@ -76,7 +76,7 @@ def tag_detail(tag: str):
     tagged_posts = [post for post in posts if tag in post['tags']]
     post_items = [Div(H2(A(post['title'], href=f"/posts/{post['filename']}", **{"class": "text-2xl font-bold hover:text-blue-700"})),
                       P(f"Date: {post['date']}", **{"class": "text-gray-600"}),
-                      P(f"Tags: {', '.join(post['tags'])}", **{"class": "text-gray-500"})) for post in posts]
+                      P(f"Tags: {', '.join(post['tags'])}", **{"class": "text-gray-500"})) for post in tagged_posts]
     return Titled(f"Posts tagged with {tag}", Div(navbar(), *post_items, **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
 serve()
