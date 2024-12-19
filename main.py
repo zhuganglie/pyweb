@@ -43,6 +43,6 @@ def post_detail(filename: str):
         content = f.read()
         html_content = markdown.markdown(content)
     post = frontmatter.load(os.path.join(POSTS_DIR, filename))
-    return Titled("Post Detail", post_detail_template(post['title'], post.get('date', 'No Date'), post.get('tags', []), html_content))
+    return Titled("", post_detail_template(post['title'], post.get('date', 'No Date'), post.get('tags', []), html_content))
 
 serve()
