@@ -13,8 +13,11 @@ def navbar():
         style="text-align: center; margin-bottom: 25px; padding: 10px;"
     )
 
+from fasthtml.server import serve
+from fasthtml.common import Titled, Link
+
 app, rt = fast_app(
-    hdrs=(
+    head=(
         Link(
             rel="stylesheet",
             href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/tailwind.min.css",
