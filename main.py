@@ -26,7 +26,8 @@ def get_posts():
                 'title': post['title'],
                 'date': post.get('date', 'No Date'),
                 'tags': post.get('tags', []),
-                'filename': os.path.basename(filepath)
+                'filename': os.path.basename(filepath),
+                'tags': post.get('tags', [])
             })
     return posts
 
