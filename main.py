@@ -5,7 +5,15 @@ from fasthtml.common import *
 import frontmatter
 from post_template import post_detail_template
 
-app, rt = fast_app()
+app, rt = fast_app(
+    hdrs=(
+        Link(
+            rel="stylesheet",
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/tailwind.min.css",
+            type="text/css",
+        ),
+    )
+)
 
 POSTS_DIR = 'posts'
 
