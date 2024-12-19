@@ -1,6 +1,8 @@
 import os
+import glob
 import markdown
 from fasthtml.common import *
+import frontmatter
 
 app, rt = fast_app()
 
@@ -8,20 +10,15 @@ POSTS_DIR = 'posts'
 
 def get_posts():
     posts = []
-    for filename in os.listdir(POSTS_DIR):
-        if filename.endswith('.md'):
-            with open(os.path.join(POSTS_DIR, filename), 'r') as f:
-                content = f.read()
-                title, date, tags = extract_metadata(content)
-                posts.append({'title': title, 'date': date, 'tags': tags, 'filename': filename})
+    for filepath in glob.glob(os.path.join(POSTS_DIR, '*.md')):
+        post = frontmatter.load(filepath)
+        posts.append({
+            'title': post['title'],
+            'date': post.get('date', 'No Date'),
+            'tags': post.get('tags', []),
+            'filename': os.path.basename(filepath)
+        })
     return posts
-
-def extract_metadata(content):
-    lines = content.splitlines()
-    title = lines[0].replace('# ', '')
-    date = lines[1].replace('Date: ', '')
-    tags = lines[2].replace('Tags: ', '').split(', ')
-    return title, date, tags
 
 @rt("/")
 def get():
