@@ -21,12 +21,13 @@ def get_posts():
     posts = []
     for filepath in glob.glob(os.path.join(POSTS_DIR, '*.md')):
         post = frontmatter.load(filepath)
-        posts.append({
-            'title': post['title'],
-            'date': post.get('date', 'No Date'),
-            'tags': post.get('tags', []),
-            'filename': os.path.basename(filepath)
-        })
+        if post.get('draft') != True:
+            posts.append({
+                'title': post['title'],
+                'date': post.get('date', 'No Date'),
+                'tags': post.get('tags', []),
+                'filename': os.path.basename(filepath)
+            })
     return posts
 
 @rt("/")
