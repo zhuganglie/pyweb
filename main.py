@@ -7,8 +7,6 @@ from post_template import post_detail_template
 
 def navbar():
     return Div(
-        A("Home", href="/"),
-        " | ",
         A("Home", href="/",  **{"class": "text-lg font-semibold text-gray-800 hover:text-gray-600"}),
         " | ",
         A("Tags", href="/tags", **{"class": "text-lg font-semibold text-gray-800 hover:text-gray-600"}),
