@@ -5,5 +5,5 @@ def post_detail_template(title, date, tags, content):
         Div(H1(title, **{"class": "text-3xl font-bold text-center"}),
             P(f"Date: {date}", **{"class": "text-gray-600 text-center"})),
         Div(NotStr(content), **{"class": "my-4"}),
-        P("Tags: " + ", ".join(str(A(tag, href=f"/tag/{tag}", **{"class": "text-gray-500 hover:text-blue-700"})) for tag in tags), **{"class": "text-gray-500 text-left"})
+        P("Tags: " + ", ".join(A(tag, href=f"/tag/{tag}", **{"class": "text-gray-500 hover:text-blue-700"}) for tag in tags), **{"class": "text-gray-500 text-left"})
     )

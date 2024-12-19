@@ -47,7 +47,7 @@ def get():
     posts = get_posts()
     post_items = [Div(H2(A(post['title'], href=f"/posts/{post['filename']}", **{"class": "text-2xl font-bold hover:text-blue-700"})),
                       P(f"Date: {post['date']}", **{"class": "text-gray-600"}),
-                      P("Tags: " + ", ".join(str(A(tag, href=f"/tag/{tag}", **{"class": "text-gray-500 hover:text-blue-700"})) for tag in post['tags']), **{"class": "text-gray-500"})) for post in posts]
+                      P("Tags: " + ", ".join(A(tag, href=f"/tag/{tag}", **{"class": "text-gray-500 hover:text-blue-700"}) for tag in post['tags']), **{"class": "text-gray-500"})) for post in posts]
     return Titled("Pyrrho's Blog", Div(navbar(), *post_items, **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
 @rt("/posts/{filename}")
@@ -74,7 +74,7 @@ def tag_detail(tag: str):
     tagged_posts = [post for post in posts if tag in post['tags']]
     post_items = [Div(H2(A(post['title'], href=f"/posts/{post['filename']}", **{"class": "text-2xl font-bold hover:text-blue-700"})),
                       P(f"Date: {post['date']}", **{"class": "text-gray-600"}),
-                      P("Tags: " + ", ".join(str(A(tag, href=f"/tag/{tag}", **{"class": "text-gray-500 hover:text-blue-700"})) for tag in post['tags']), **{"class": "text-gray-500"})) for post in tagged_posts]
+                      P("Tags: " + ", ".join(A(tag, href=f"/tag/{tag}", **{"class": "text-gray-500 hover:text-blue-700"}) for tag in post['tags']), **{"class": "text-gray-500"})) for post in tagged_posts]
     return Titled(f"Posts tagged with {tag}", Div(navbar(), *post_items, **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
 serve()
