@@ -7,7 +7,7 @@ def post_detail_template(title, date, tags, content):
             P(f"Date: {date}", **{"class": "text-gray-600 text-center"}),
             **{"class": "text-center"}
         ),
-        Div(content, **{"class": "my-4"}),
+        Div(NotStr(content), **{"class": "my-4"}),
         P(f"Tags: {', '.join(tags)}", **{"class": "text-gray-500 text-left"})
     )
           
