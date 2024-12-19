@@ -9,9 +9,9 @@ def navbar():
     return Div(
         A("Home", href="/"),
         " | ",
-        A("Home", href="/",  class="text-lg font-semibold text-gray-800 hover:text-gray-600"),
+        A("Home", href="/",  **{"class":"text-lg font-semibold text-gray-800 hover:text-gray-600"}),
         " | ",
-        A("Tags", href="/tags", class="text-lg font-semibold text-gray-800 hover:text-gray-600"),
+        A("Tags", href="/tags", **{"class":"text-lg font-semibold text-gray-800 hover:text-gray-600"}),
         style="text-align: center; margin-bottom: 25px; padding: 10px;"
     )
 
