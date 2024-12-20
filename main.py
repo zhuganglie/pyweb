@@ -39,7 +39,7 @@ def get_posts():
                 'date': post.get('date', 'No Date'),
                 'tags': post.get('tags', []),
                 'filename': os.path.basename(filepath),
-                'tags': post.get('tags', [])
+
             })
     posts.sort(key=lambda post: datetime.datetime.strptime(post['date'], '%Y-%m-%d') if post['date'] != 'No Date' else datetime.datetime.min, reverse=True)
     return posts
@@ -50,7 +50,7 @@ def get():
     post_items = [Div(H2(A(post['title'], href=f"/posts/{post['filename']}", **{"class": "text-2xl font-bold hover:text-blue-700"})),
                       P(f"Date: {post['date']}", **{"class": "text-gray-600"}),
                       P(f"Tags: {', '.join(post['tags'])}", **{"class": "text-gray-500"})) for post in posts]
-    return Titled("Pyrrho's Blog", Div(navbar(), *post_items, **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
+    return Titled("AI's Blog", Div(navbar(), *post_items, **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
 @rt("/posts/{filename}")
 def post_detail(filename: str):
