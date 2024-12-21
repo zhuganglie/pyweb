@@ -8,7 +8,7 @@ def post_detail_template(title, date, tags, content):
             **{"class": "text-center"}
         ),
         Div(NotStr(content), **{"class": "my-4"}),
-        P("Tags: ", *[Span(A(tag, href=f"/tag/{tag}", **{"class": "text-blue-500 hover:text-blue-700 mx-2"})) for tag in tags], **{"class": "text-gray-500 text-left"})
+        P("Tags: ", *[Div(A(tag, href=f"/tag/{tag}", cls="text-blue-500 hover:text-blue-700 no-underline")) for tag in tags], **{"class": "text-gray-500 text-left"})
     )
           
     
