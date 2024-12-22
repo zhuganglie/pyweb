@@ -17,14 +17,10 @@ def navbar():
 from fasthtml.core import serve
 from fasthtml.common import Titled, Link
 
+tw=Script(src="https://cdn.tailwindcss.com")
 app, rt = fast_app(
-    head=(
-        Link(
-            rel="stylesheet",
-            href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/tailwind.min.css",
-            type="text/css",
-        ),
-    )
+    pico=False,
+    hdrs=[tw]
 )
 
 POSTS_DIR = 'posts'
