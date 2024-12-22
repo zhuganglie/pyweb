@@ -20,7 +20,7 @@ from fasthtml.common import Titled, Link
 tw=Script(src="https://cdn.tailwindcss.com")
 app, rt = fast_app(
     pico=False,
-    hdrs=[tw]
+    hdrs=[tw,  Link(rel='stylesheet', href='/public/style.css', type='text/css'), MarkdownJS()]
 )
 
 POSTS_DIR = 'posts'
