@@ -43,12 +43,7 @@ def get():
                       P(f"Tags: {', '.join(post['tags'])}", **{"class": "text-gray-500"})) for post in posts]
     return Titled("AI's Blog", Div(navbar(), *post_items, **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
-@rt("/posts/{filename}")
-def post_detail(filename: str):
-    with open(os.path.join(POSTS_DIR, filename), 'r') as f:
-        content = f.read()
-    post = frontmatter.load(os.path.join(POSTS_DIR, filename))
-    return Titled("", Div(navbar(), post_detail_template(post['title'], post.get('date', 'No Date'), post.get('tags', []), Div(f"<zero-md><script type='text/markdown'>{post.content}</script></zero-md>"))), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"})
+
 
 @rt("/tags")
 def tags():
