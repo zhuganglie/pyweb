@@ -32,7 +32,7 @@ def get_posts():
             post = frontmatter.load(f)
             post['filename'] = os.path.basename(filepath)
             posts.append(post)
-    posts.sort(key=lambda x: x['date'], reverse=True)
+    posts.sort(key=lambda x: x.get('date', 'No Date'), reverse=True)
     return posts
 
 @rt("/")
