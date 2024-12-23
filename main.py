@@ -71,6 +71,6 @@ def post_detail(filename: str):
     if not post:
         return "Post not found"
     content = markdown.markdown(post.content)
-    return Titled(post['title'], Div(navbar(), post_detail_template(post['title'], post['date'], post['tags'], content), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
+    return Titled(post['title'], Div(navbar(), post_detail_template(post['title'], post['date'], post['tags'], post.content), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
 serve()
