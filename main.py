@@ -2,6 +2,10 @@ import os
 import glob
 import markdown
 import frontmatter
+import os
+import glob
+import markdown
+import frontmatter
 from fasthtml.common import *
 from post_template import post_detail_template
 import datetime
@@ -20,7 +24,8 @@ from fasthtml.common import Titled, Link
 tw=Script(src="https://cdn.tailwindcss.com")
 app, rt = fast_app(
     pico=False,
-    hdrs=[tw,  Link(rel='stylesheet', href='/public/style.css', type='text/css')]
+    hdrs=[tw,  Link(rel='stylesheet', href='/public/style.css', type='text/css'),
+          Script(src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js")]
 )
 
 POSTS_DIR = 'posts'
@@ -70,7 +75,6 @@ def post_detail(filename: str):
     post = next((post for post in posts if post['filename'] == filename), None)
     if not post:
         return "Post not found"
-    content = markdown.markdown(post.content)
-    return Titled(post['title'], Div(navbar(), post_detail_template(post['title'], post['date'], post['tags'], content), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
+    return Titled(post['title'], Div(navbar(), post_detail_template(post['title'], post['date'], post['tags'], f"/posts/{filename}"), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
 serve()
