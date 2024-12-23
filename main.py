@@ -75,6 +75,6 @@ def post_detail(filename: str):
     post = next((post for post in posts if post['filename'] == filename), None)
     if not post:
         return "Post not found"
-    return Titled(post['title'], Div(navbar(), post_detail_template(post['title'], post['date'], post['tags'], f"/posts/{filename}"), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
+    return Titled(post['title'], Div(navbar(), post_detail_template(post['title'], post['date'], post['tags'], post.content), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
 serve()
