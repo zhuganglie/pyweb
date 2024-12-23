@@ -20,10 +20,20 @@ from fasthtml.common import Titled, Link
 tw=Script(src="https://cdn.tailwindcss.com")
 app, rt = fast_app(
     pico=False,
-    hdrs=[tw,  Link(rel='stylesheet', href='/public/style.css', type='text/css'), Script(src="https://cdn.jsdelivr.net/gh/zerodevapp/zero-md@2/dist/zero-md.min.js")]
+    hdrs=[tw,  Link(rel='stylesheet', href='/public/style.css', type='text/css')]
 )
 
 POSTS_DIR = 'posts'
+
+def get_posts():
+    posts = []
+    for filepath in glob.glob(os.path.join(POSTS_DIR, '*.md')):
+        with open(filepath, 'r') as f:
+            post = frontmatter.load(f)
+            post['filename'] = os.path.basename(filepath)
+            posts.append(post)
+    posts.sort(key=lambda x: x['date'], reverse=True)
+    return posts
 
 @rt("/")
 def get():
