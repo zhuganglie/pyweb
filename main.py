@@ -20,25 +20,10 @@ from fasthtml.common import Titled, Link
 tw=Script(src="https://cdn.tailwindcss.com")
 app, rt = fast_app(
     pico=False,
-    hdrs=[tw,  Link(rel='stylesheet', href='/public/style.css', type='text/css'), MarkdownJS()]
+    hdrs=[tw,  Link(rel='stylesheet', href='/public/style.css', type='text/css'), Script(src="https://cdn.jsdelivr.net/gh/zerodevapp/zero-md@2/dist/zero-md.min.js")]
 )
 
 POSTS_DIR = 'posts'
-
-def get_posts():
-    posts = []
-    for filepath in glob.glob(os.path.join(POSTS_DIR, '*.md')):
-        post = frontmatter.load(filepath)
-        if post.get('draft') != True:
-            posts.append({
-                'title': post['title'],
-                'date': post.get('date', 'No Date'),
-                'tags': post.get('tags', []),
-                'filename': os.path.basename(filepath),
-
-            })
-    posts.sort(key=lambda post: datetime.datetime.strptime(post['date'], '%Y-%m-%d') if post['date'] != 'No Date' else datetime.datetime.min, reverse=True)
-    return posts
 
 @rt("/")
 def get():
@@ -53,8 +38,7 @@ def post_detail(filename: str):
     with open(os.path.join(POSTS_DIR, filename), 'r') as f:
         content = f.read()
     post = frontmatter.load(os.path.join(POSTS_DIR, filename))
-    html_content = markdown.markdown(post.content)
-    return Titled("", Div(navbar(), post_detail_template(post['title'], post.get('date', 'No Date'), post.get('tags', []), html_content), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
+    return Titled("", Div(navbar(), post_detail_template(post['title'], post.get('date', 'No Date'), post.get('tags', []), Div(NotStr(f"<zero-md><script type='text/markdown'>{post.content}</script></zero-md>"))), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
 @rt("/tags")
 def tags():
