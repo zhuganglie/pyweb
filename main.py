@@ -64,4 +64,13 @@ def tag_detail(tag: str):
                       P(f"Tags: {', '.join(post['tags'])}", **{"class": "text-gray-500"})) for post in tagged_posts]
     return Titled(f"Posts tagged with {tag}", Div(navbar(), *post_items, **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
 
+@rt("/posts/{filename}")
+def post_detail(filename: str):
+    posts = get_posts()
+    post = next((post for post in posts if post['filename'] == filename), None)
+    if not post:
+        return "Post not found"
+    content = markdown.markdown(post.content)
+    return Titled(post['title'], Div(navbar(), post_detail_template(post['title'], post['date'], post['tags'], content), **{"class": "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"}))
+
 serve()
