@@ -7,6 +7,6 @@ def post_detail_template(title, date, tags, content):
             P(f"Date: {date}", **{"class": "text-gray-600 text-center"}),
             **{"class": "text-center"}
         ),
-        Div(NotStr(content), **{"class": "my-4 prose"}),
+        Div(content, **{"class": "my-4 prose"}),
         Div("Tags: ", *[A(tag, href=f"/tag/{tag}", cls="text-blue-500 hover:text-blue-700 no-underline mr-2") for tag in tags], cls= "text-gray-500 text-left")
     )
