@@ -2,6 +2,7 @@ from fasthtml.fastapp import fast_app
 from fasthtml.components import Titled, Div, H2, Li, A, Ul
 from fasthtml.js import MarkdownJS, HighlightJS
 from blog import get_posts, render_post, render_index, get_tags, render_tag_index
+from fasthtml.core import serve
 
 app, rt = fast_app(
     hdrs=(MarkdownJS(), HighlightJS(langs=['python', 'javascript', 'html', 'css']))
