@@ -12,7 +12,7 @@ def index():
     return render_index(posts)
 
 @rt("/post/{slug}")
-def post(slug: str):
+def get(slug: str):
     for post in posts:
         if post.metadata['slug'] == slug:
             return render_post(post)
