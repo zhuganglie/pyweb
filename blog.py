@@ -1,6 +1,8 @@
 import os
 import frontmatter
-from fasthtml.common import *
+import os
+import frontmatter
+from fasthtml.components import Titled, Div, H2, Li, A, Ul
 
 POSTS_DIR = "posts"
 
