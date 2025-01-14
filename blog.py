@@ -18,19 +18,19 @@ def render_post(post):
     return Titled(
         post["title"],
         Div(
-            H2(post["title"], cls="text-2xl font-bold mb-4"),
+            H2(post["title"]),
             Div(f"Tags: {', '.join(post.get('tags', []))}", cls="mb-2"),
-            Div(post.content, cls="prose"),
+            Div(post.content, cls="marked"),
         ),
     )
 
 
 def render_index(posts):
     links = [
-        Li(A(post["title"], href=f"/post/{post.metadata['slug']}", cls="block py-2"))
+        Li(A(post["title"], href=f"/post/{post.metadata['slug']}"))
         for post in posts
     ]
-    return Titled("Blog Index", Ul(*links, cls="space-y-2"))
+    return Titled("Blog Index", Ul(*links))
 
 def get_tags(posts):
     tags = set()
@@ -40,8 +40,8 @@ def get_tags(posts):
 
 def render_tag_index(posts, tag):
     links = [
-        Li(A(post["title"], href=f"/post/{post.metadata['slug']}", cls="block py-2"))
+        Li(A(post["title"], href=f"/post/{post.metadata['slug']}"))
         for post in posts
         if tag in post.get("tags", [])
     ]
-    return Titled(f"Posts tagged with {tag}", Ul(*links, cls="space-y-2"))
+    return Titled(f"Posts tagged with {tag}", Ul(*links))
