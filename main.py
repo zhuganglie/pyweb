@@ -8,10 +8,7 @@ from layout import layout
 
 app, rt = fast_app(
     hdrs=(
-        Link(
-            rel="stylesheet",
-            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css",
-        ),
+        Link(rel='stylesheet', href='/public/style.css', type='text/css'),
         MarkdownJS(),
         HighlightJS(langs=["python", "javascript", "html", "css"]),
     )
