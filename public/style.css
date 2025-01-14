@@ -27,5 +27,4 @@ body {
 
 .nav ul li a.active {
     font-weight: bold;
-    text-decoration: underline;
 }
