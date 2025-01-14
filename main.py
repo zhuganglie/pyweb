@@ -1,5 +1,5 @@
 from fasthtml.fastapp import fast_app
-from fasthtml.components import Div, H2, Li, A, Ul
+from fasthtml.components import Div, H2, Li, A, Ul, Link
 from fasthtml.js import MarkdownJS, HighlightJS
 from blog import get_posts, render_post, render_index, get_tags, render_tag_index
 from fasthtml.core import serve
@@ -7,7 +7,14 @@ from nav import navbar
 from layout import layout
 
 app, rt = fast_app(
-    hdrs=(MarkdownJS(), HighlightJS(langs=['python', 'javascript', 'html', 'css']))
+    hdrs=(
+        Link(
+            rel="stylesheet",
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css",
+        ),
+        MarkdownJS(),
+        HighlightJS(langs=["python", "javascript", "html", "css"]),
+    )
 )
 
 posts = get_posts()
