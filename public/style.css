@@ -1,7 +1,96 @@
 /* PurgeCSS will remove this */
 
+/* PurgeCSS will remove this */
+
 .prose {
     max-width: 65ch;
     margin-left: auto;
     margin-right: auto;
+}
+
+.prose h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.prose h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.prose h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.prose h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.prose h5 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.prose h6 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.prose p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.prose ul,
+.prose ol {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.prose li {
+    margin-bottom: 0.5rem;
+}
+
+.prose a {
+    color: #3490dc;
+    text-decoration: underline;
+}
+
+.prose a:hover {
+    text-decoration: none;
+}
+
+.prose blockquote {
+    border-left: 4px solid #cbd5e0;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.prose code {
+    background-color: #edf2f7;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.prose pre {
+    background-color: #edf2f7;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.prose pre code {
+    background-color: transparent;
+    padding: 0;
 }
