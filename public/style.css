@@ -24,3 +24,8 @@ body {
 .marked p {
     margin-bottom: 1em;
 }
+
+.nav ul li a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
