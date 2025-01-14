@@ -1,1 +1,7 @@
 /* PurgeCSS will remove this */
+
+.prose {
+    max-width: 65ch;
+    margin-left: auto;
+    margin-right: auto;
+}
