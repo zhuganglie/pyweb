@@ -4,7 +4,6 @@ from fasthtml.js import MarkdownJS, HighlightJS
 from blog import get_posts, render_post, render_index, get_tags, render_tag_index
 from fasthtml.core import serve
 from nav import navbar
-from layout import layout
 
 app, rt = fast_app(
     hdrs=(MarkdownJS(), HighlightJS(langs=['python', 'javascript', 'html', 'css']))
@@ -30,6 +29,6 @@ def tag(tag: str):
 @rt("/tags")
 def tags():
     links = [Li(A(tag, href=f"/tag/{tag}")) for tag in get_tags(posts)]
-    return Titled("Tags", Ul(*links))
+    return layout("Tags", Ul(*links))
 
 serve()
