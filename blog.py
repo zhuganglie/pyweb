@@ -18,12 +18,11 @@ def render_post(post):
     return Titled(
         post["title"],
         Div(
-            H2(post["title"]),
-            Div(f"Tags: {', '.join(post.get('tags', []))}", cls=""),
-            Div(post.content, cls="markdown"),
+            H2(post["title"], cls="text-2xl font-bold mb-4"),
+            Div(f"Tags: {', '.join(post.get('tags', []))}", cls="text-gray-600 mb-4"),
+            Div(post.content, cls="markdown prose"),
         ),
     )
-
 
 def render_index(posts):
     links = [
