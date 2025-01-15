@@ -8,7 +8,6 @@ from layout import layout
 
 app, rt = fast_app(
     hdrs=(
-        Link(rel='stylesheet', href='/public/style.css', type='text/css'),
         MarkdownJS(),
         HighlightJS(langs=["python", "javascript", "html", "css"]),
     )
@@ -24,7 +23,7 @@ def index():
 def get(slug: str):
     for post in posts:
         if post.metadata['slug'] == slug:
-            return render_post(post)
+            return layout(render_post(post))
     return "Post not found"
 
 @rt("/tag/{tag}")
