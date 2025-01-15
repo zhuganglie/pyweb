@@ -14,7 +14,7 @@ app, rt = fast_app(
         ),
         MarkdownJS(),
         HighlightJS(langs=["python", "javascript", "html", "css"]),
-        Link(rel="stylesheet", href="/public/style.css")
+        Link(rel="stylesheet", href="/public/output.css")
     )
 )
 
