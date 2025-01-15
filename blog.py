@@ -20,7 +20,7 @@ def render_post(post):
         Div(
             H2(post["title"]),
             Div(f"Tags: {', '.join(post.get('tags', []))}", cls=""),
-            Div(post.content, cls="marked"),
+            Div(post.content, cls="markdown"),
         ),
     )
 
