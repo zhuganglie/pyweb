@@ -2,7 +2,14 @@ from fasthtml.common import *
 from blog import get_blog_index, get_post, get_posts_by_tag, get_tag_list
 from layout import root_layout
 
-app, rt = fast_app(hdrs=(MarkdownJS(), HighlightJS(langs=['python', 'javascript', 'html', 'css']), ))
+app, rt = fast_app(
+    pico=False,
+    hdrs=(
+        Link(rel='stylesheet', href='assets/normalize.min.css', type='text/css'),
+        Link(rel='stylesheet', href='assets/sakura.css', type='text/css'),
+        MarkdownJS(),
+        HighlightJS(langs=['python', 'javascript', 'html', 'css']),
+        ))
 
 @rt("/")
 def get():
