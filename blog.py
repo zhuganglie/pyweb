@@ -38,3 +38,15 @@ def get_posts_by_tag(tag):
     tagged_posts = [post for post in posts if tag in post['tags']]
     post_items = [Li(A(post['title'], href=f"/posts/{post['slug']}")) for post in tagged_posts]
     return root_layout(Titled(f"Posts tagged with '{tag}'", Ul(*post_items)))
+
+def get_all_tags():
+    posts = get_posts()
+    tags = set()
+    for post in posts:
+        tags.update(post['tags'])
+    return tags
+
+def get_tag_list():
+    tags = get_all_tags()
+    tag_items = [Li(A(f"#{tag}", href=f"/tags/{tag}")) for tag in tags]
+    return root_layout(Titled("All Tags", Ul(*tag_items)))
