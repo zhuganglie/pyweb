@@ -9,6 +9,7 @@ app, rt = fast_app(
         Link(rel='stylesheet', href='assets/sakura.css', type='text/css'),
         MarkdownJS(),
         HighlightJS(langs=['python', 'javascript', 'html', 'css']),
+        Style(".active { font-weight: bold;}")
         ))
 
 @rt("/")
