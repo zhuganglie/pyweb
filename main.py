@@ -13,19 +13,19 @@ app, rt = fast_app(
 
 @rt("/")
 def get(req):
-    return get_blog_index(req.path)
+    return get_blog_index(req.url.path)
 
 @rt("/posts/{slug}")
 def get(slug:str, req):
-    return get_post(slug, req.path)
+    return get_post(slug, req.url.path)
 
 @rt("/tags/{tag}")
 def get(tag:str, req):
-    return get_posts_by_tag(tag, req.path)
+    return get_posts_by_tag(tag, req.url.path)
 
 @rt("/tags")
 def get(req):
-    return get_tag_list(req.path)
+    return get_tag_list(req.url.path)
 
 @rt("/about")
 def get(req):
