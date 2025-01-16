@@ -1,6 +1,6 @@
 from fasthtml.common import *
 
-def root_layout(content, current_path=""):
+def root_layout(content, current_path="/"):
     return Titled(
         "",
         Container(

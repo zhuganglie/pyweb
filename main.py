@@ -29,6 +29,6 @@ def get(req):
 
 @rt("/about")
 def get(req):
-    return root_layout(Titled("About", P("This is the about page.")), req.path)
+    return root_layout(Titled("About", P("This is the about page.")), req.path if req else "/")
 
 serve()
