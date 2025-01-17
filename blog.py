@@ -19,6 +19,8 @@ def get_posts():
                         post['date'] = datetime.fromisoformat(str(date))
                     except ValueError:
                         post['date'] = datetime.min
+                if post.get('draft') == True:
+                    continue
                 posts.append(post)
     posts.sort(key=lambda post: post.get('date', datetime.min), reverse=True)
     return posts
