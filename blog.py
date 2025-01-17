@@ -72,5 +72,5 @@ def get_tag_list(current_path=None):
     for post in posts:
         for tag in post['tags']:
             tag_counts[tag] = tag_counts.get(tag, 0) + 1
-    tag_items = [Li(A(f"#{tag} ({tag_counts[tag]})", href=f"/tags/{tag}")) for tag in tags]
-    return root_layout(Titled("All Tags", Ul(*tag_items)), current_path if current_path else "/")
+    tag_items = [Li(A(f"{tag} ({tag_counts[tag]})", href=f"/tags/{tag}")) for tag in tags]
+    return root_layout(Titled("All Tags", Ul(*tag_items, style="display:flex; flex-wrap:wrap; gap:8px; list-style-type:none")), current_path if current_path else "/")
