@@ -15,7 +15,10 @@ def get_posts():
                 post['tags'] = post.get('tags', [])
                 date = post.get('date', None)
                 if date:
-                    post['date'] = date
+                    try:
+                        post['date'] = datetime.fromisoformat(date)
+                    except ValueError:
+                        post['date'] = datetime.min
                 posts.append(post)
     posts.sort(key=lambda post: post.get('date', datetime.min), reverse=True)
     return posts
