@@ -13,7 +13,7 @@ def root_layout(content, current_path="/"):
                         style="list-style-type:none; display:flex; gap:20px;"
                     )
                 ),
-                style="display:flex; justify-content:center; padding: 10px;"
+                style="display:flex; flex-direction:column; justify-content:center; padding: 10px;"
             ),
             content,
             Footer(
