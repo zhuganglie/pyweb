@@ -7,15 +7,18 @@ def root_layout(content, current_path="/"):
                 H1(A("Why?", href="/", style="text-decoration: none; color: black;")),
                 Nav(
                     Ul(
-                        Li(A("Home", href="/", style="text-decoration:none; color:black;"), cls="active" if current_path == "/" or current_path.startswith("/posts") else ""),
-                        Li(A("About", href="/about", style="text-decoration:none; color:black;"), cls="active" if current_path.startswith("/about")  else ""),
-                        Li(A("Tags", href="/tags", style="text-decoration:none; color:black;"), cls="active" if current_path.startswith("/tags")  else ""),
+                        Li(A("Home", href="/"), cls="active" if current_path == "/" or current_path.startswith("/posts") else "", style="text-decoration:none; color:black;"),
+                        Li(A("About", href="/about"), cls="active" if current_path.startswith("/about")  else "", style="text-decoration:none; color:black;"),
+                        Li(A("Tags", href="/tags"), cls="active" if current_path.startswith("/tags")  else "", style="text-decoration:none; color:black;"),
                         style="list-style-type:none; display:flex; gap:20px;"
                     )
-                )
+                ),
+                style="display:flex; justify-content:center; padding: 10px;"
             ),
             content,
             Footer(
-                P(f"© {datetime.now().year}", B('Why?', style="margin-left:10px;") )
-            )
+                P(f"© {datetime.now().year}", B('Why?', style="margin-left:10px;") ),
+                style="display:flex; justify-content:center; padding: 10px;"
+            ),
+            style="padding: 10px;"
         )
