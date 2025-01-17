@@ -12,7 +12,11 @@ def get_posts():
                 post = frontmatter.load(f)
                 post['slug'] = filename[:-3]
                 post['tags'] = post.get('tags', [])
+                date = post.get('date', None)
+                if date:
+                    post['date'] = date
                 posts.append(post)
+    posts.sort(key=lambda post: post.get('date', datetime.min), reverse=True)
     return posts
 
 from layout import root_layout
