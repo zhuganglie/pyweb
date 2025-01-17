@@ -21,8 +21,8 @@ def get_blog_index(current_path=None):
     posts = get_posts()
     post_items = []
     for post in posts:
-        tags = [A(f"#{tag}", href=f"/tags/{tag}") for tag in post['tags']]
-        post_items.append(Li(A(post['title'], href=f"/posts/{post['slug']}"), " ", *tags))
+        tags = [A(f"#{tag}", href=f"/tags/{tag}", style="margin-right:5px; font-size:13px;") for tag in post['tags']]
+        post_items.append(Li(A(post['title'], href=f"/posts/{post['slug']}", style="text-decoration:none"), " ", P(*tags), tyle="margin-bottom:10px; gap:10px;"))
     return root_layout(Ul(*post_items), current_path if current_path else "/")
 
 def get_post(slug, current_path=None):
@@ -30,7 +30,7 @@ def get_post(slug, current_path=None):
     post = next((post for post in posts if post['slug'] == slug), None)
     if not post:
         return Titled("Post not found", P("Sorry, the post you requested was not found."))
-    tags = [A(f"#{tag}", href=f"/tags/{tag}") for tag in post['tags']]
+    tags = [A(f"#{tag}", href=f"/tags/{tag}", style="margin-right:5px;") for tag in post['tags']]
     return root_layout(Div(Titled(post['title'], Div(post.content, cls="marked"), P(*tags))), current_path if current_path else "/")
 
 def get_posts_by_tag(tag, current_path=None):
