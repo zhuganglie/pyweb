@@ -2,9 +2,7 @@ from fasthtml.common import *
 from datetime import datetime
 
 def root_layout(content, current_path="/"):
-    return Titled(
-        "",
-        Container(
+    return Container(
             Header(
                 H1(A("Why?", href="/", style="text-decoration: none; color: black;")),
                 Nav(
@@ -18,7 +16,6 @@ def root_layout(content, current_path="/"):
             ),
             content,
             Footer(
-                P(f"© {datetime.now().year} Why?")
+                P(f"© {datetime.now().year}", B('Why?', style="margin-left:10px;") )
             )
         )
-    )

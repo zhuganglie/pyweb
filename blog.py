@@ -2,6 +2,7 @@ import os
 import frontmatter
 from fasthtml.common import *
 from datetime import datetime
+from lucide_fasthtml import Lucide
 
 POSTS_DIR = "posts"
 
@@ -31,13 +32,13 @@ def get_blog_index(current_path=None):
     posts = get_posts()
     post_items = []
     for post in posts:
-        tags = [A( f"#{tag}", href=f"/tags/{tag}", style="margin-right:10px; font-size:11pt;") for tag in post['tags']]
+        tags = [A( Lucide("tag", size="12"), f"{tag}", href=f"/tags/{tag}", style="margin-right:10px; font-size:11pt;") for tag in post['tags']]
         date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
         post_items.append(Li(
             P(date_str, style="margin-below:5px;font-size:10pt; color:#666;"),
             A(post['title'], href=f"/posts/{post['slug']}", style="text-decoration:none; font-size:18px;"),
             " ",
-            Div(*tags, style="margin-top:5px;"),
+            Div( *tags, style="margin-top:5px;"),
             style="margin-bottom:10px; gap:10px;"
         ))
     return root_layout(Ul(*post_items), current_path if current_path else "/")
@@ -47,7 +48,7 @@ def get_post(slug, current_path=None):
     post = next((post for post in posts if post['slug'] == slug), None)
     if not post:
         return Titled("Post not found", P("Sorry, the post you requested was not found."))
-    tags = [A(f"#{tag}", href=f"/tags/{tag}", style="margin-right:10px;") for tag in post['tags']]
+    tags = [A(Lucide("tag", size="15"), f"{tag}", href=f"/tags/{tag}", style="margin-right:10px;") for tag in post['tags']]
     date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
     return root_layout(Div(Titled(post['title'], P(date_str, style="margin:0; font-size:10pt; color:#666;"), Div(post.content, cls="marked"), P(*tags))), current_path if current_path else "/")
 
