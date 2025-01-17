@@ -3,4 +3,4 @@ markdown
 python-frontmatter
 pyyaml
 pytz
-jinja2
+lucide-fasthtml

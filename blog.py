@@ -31,11 +31,11 @@ def get_blog_index(current_path=None):
     posts = get_posts()
     post_items = []
     for post in posts:
-        tags = [A(f"#{tag}", href=f"/tags/{tag}", style="margin-right:10px; font-size:11pt;") for tag in post['tags']]
+        tags = [A( f"#{tag}", href=f"/tags/{tag}", style="margin-right:10px; font-size:11pt;") for tag in post['tags']]
         date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
         post_items.append(Li(
             P(date_str, style="margin-below:5px;font-size:10pt; color:#666;"),
-            A(post['title'], href=f"/posts/{post['slug']}", style="text-decoration:none"),
+            A(post['title'], href=f"/posts/{post['slug']}", style="text-decoration:none; font-size:18px;"),
             " ",
             Div(*tags, style="margin-top:5px;"),
             style="margin-bottom:10px; gap:10px;"
