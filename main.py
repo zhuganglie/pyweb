@@ -13,6 +13,7 @@ app, rt = fast_app(
         Style(
             ".active { font-weight: bold;}",
             ".container {position:relative;margin:0 auto; width:100%; }"
+            ".marked > h3 {font-weight: bold; }"
             )
     ))
 
