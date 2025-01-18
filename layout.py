@@ -4,7 +4,7 @@ from datetime import datetime
 def root_layout(content, current_path="/"):
     return Container(
             Header(
-                H1(A("Why?", href="/", style="text-decoration: none; color: black;")),
+                H1(A("Insights", href="/", style="text-decoration: none; color: black;")),
                 Nav(
                     Ul(
                         Li(A("Home", href="/"), cls="active" if current_path == "/" or current_path.startswith("/posts") else "", style="text-decoration:none; color:black;"),
@@ -17,7 +17,7 @@ def root_layout(content, current_path="/"):
             ),
             content,
             Footer(
-                P(f"© {datetime.now().year}", B('Why?', style="margin-left:10px;") ),
+                P(f"© {datetime.now().year}", B('Insights', style="margin-left:10px;") ),
                 style="display:flex; justify-content:center; padding: 10px;"
             ),
             style="padding: 10px;"

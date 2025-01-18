@@ -5,13 +5,14 @@ from layout import root_layout
 app, rt = fast_app(
     pico=False,
     hdrs=(
-        Link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css", type="text/css"),
-        Link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css', type='text/css'),
+    #    Link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css", type="text/css"),
+    #    Link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css', type='text/css'),
         MarkdownJS(),
         HighlightJS(langs=['python', 'javascript', 'html', 'css']),
+        Script(src="https://cdn.tailwindcss.com"),
         Style(
-            ".active { font-weight: bold;}"
-            ".container {display: flex; flex-direction: column; margin:auto;padding:10px; width:100%; }"
+            ".active { font-weight: bold;}",
+            ".container {position:relative;margin:0 auto; width:100%; }"
             )
     ))
 
