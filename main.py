@@ -35,7 +35,7 @@ def tag_list(req):  # Changed function name to be more descriptive
 @rt("/about")
 def about(req):  # Changed function name to be more descriptive
     return root_layout(
-        Titled("About", P("This blog explores why we live the way we live.")),
+        Titled("About", P("This blog explores why we live the way we live.", cls="mt-8")),
         req.url.path if req else "/"
     )
 

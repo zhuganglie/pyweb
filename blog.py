@@ -32,14 +32,14 @@ def get_blog_index(current_path=None):
     posts = get_posts()
     post_items = []
     for post in posts:
-        tags = [A( Lucide("tag", size="12"), f"{tag}", href=f"/tags/{tag}", style="margin-right:10px; font-size:11pt;") for tag in post['tags']]
+        tags = [A( Lucide("tag", size="12"), f"{tag}", href=f"/tags/{tag}", cls=" flex items-center gap-1 text-sm") for tag in post['tags']]
         date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
         post_items.append(Li(
-            P(date_str, style="margin-below:5px;font-size:10pt; color:#666;"),
-            A(post['title'], href=f"/posts/{post['slug']}", style="text-decoration:none; font-size:18px;"),
+            P(date_str, cls="mb-2 text-sm "),
+            A(post['title'], href=f"/posts/{post['slug']}", cls="no-underline text-xl"),
             " ",
-            Div( *tags, style="margin-top:5px;"),
-            style="margin-bottom:10px; gap:10px;"
+            Div( *tags, cls="flex gap-2 mt-2"),
+            cls="mb-5 gap-4"
         ))
     return root_layout(Ul(*post_items), current_path if current_path else "/")
 
@@ -48,15 +48,15 @@ def get_post(slug, current_path=None):
     post = next((post for post in posts if post['slug'] == slug), None)
     if not post:
         return Titled("Post not found", P("Sorry, the post you requested was not found."))
-    tags = [A(Lucide("tag", size="15"), f"{tag}", href=f"/tags/{tag}", style="margin-right:10px;") for tag in post['tags']]
+    tags = [A(Lucide("tag", size="15"), f"{tag}", href=f"/tags/{tag}", cls="flex items-center gap-1 ") for tag in post['tags']]
     date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
-    return root_layout(Div(Titled(post['title'], P(date_str, style="margin:0; font-size:10pt; color:#666;"), Div(post.content, cls="marked"), P(*tags))), current_path if current_path else "/")
+    return root_layout(Div(Titled(post['title'], P(date_str, cls="my-4"), Div(post.content, cls="marked"), P(*tags, cls="flex gap-2 my-2"))), current_path if current_path else "/")
 
 def get_posts_by_tag(tag, current_path=None):
     posts = get_posts()
     tagged_posts = [post for post in posts if tag in post['tags']]
-    post_items = [Li(A(post['title'], href=f"/posts/{post['slug']}")) for post in tagged_posts]
-    return root_layout(Titled(f"Posts tagged with '{tag}'", Ul(*post_items)), current_path if current_path else "/")
+    post_items = [Li(A(post['title'], href=f"/posts/{post['slug']}"), cls="list-disc list-inside mb-2") for post in tagged_posts]
+    return root_layout(Titled(f"Posts tagged with '{tag}'", Ul(*post_items, cls="mt-8")), current_path if current_path else "/")
 
 def get_all_tags():
     posts = get_posts()
@@ -73,4 +73,4 @@ def get_tag_list(current_path=None):
         for tag in post['tags']:
             tag_counts[tag] = tag_counts.get(tag, 0) + 1
     tag_items = [Li(A(f"{tag} ({tag_counts[tag]})", href=f"/tags/{tag}")) for tag in tags]
-    return root_layout(Titled("All Tags", Ul(*tag_items, style="display:flex; flex-wrap:wrap; gap:8px; list-style-type:none")), current_path if current_path else "/")
+    return root_layout(Titled("All Tags", Ul(*tag_items, cls="mt-8 flex flex-wrap gap-4 list-none")), current_path if current_path else "/")
