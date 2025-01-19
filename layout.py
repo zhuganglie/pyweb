@@ -10,15 +10,15 @@ def root_layout(content, current_path="/"):
                         Li(A("Home", href="/"), cls="active" if current_path == "/" or current_path.startswith("/posts") else "", style="text-decoration:none; color:black;"),
                         Li(A("About", href="/about"), cls="active" if current_path.startswith("/about")  else "", style="text-decoration:none; color:black;"),
                         Li(A("Tags", href="/tags"), cls="active" if current_path.startswith("/tags")  else "", style="text-decoration:none; color:black;"),
-                        style="list-style-type:none; display:flex; gap:20px;"
+                        cls="list-none flex gap-10"
                     )
                 ),
-                style="display:flex; flex-direction:column; justify-content:center; padding: 10px;"
+                cls="flex flex-col justify-center p-4"
             ),
             content,
             Footer(
-                P(f"© {datetime.now().year}", B('Insights', style="margin-left:10px;") ),
-                style="display:flex; justify-content:center; padding: 10px;"
+                P(f"© {datetime.now().year}", B('Insights', cls="ml-5") ),
+                cls="flex justify-center p-4"
             ),
-            style="padding: 10px;"
-        )
+            cls=""
+)
