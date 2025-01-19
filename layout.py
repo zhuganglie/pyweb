@@ -17,7 +17,7 @@ def root_layout(content, current_path="/"):
             ),
             content,
             Footer(
-                P(f"© {datetime.now().year}", B('Insights', cls="ml-5") ),
+                P(f"© {datetime.now().year}", B('Insights', cls="mx-5")),
                 cls="flex justify-center p-4"
             ),
             cls="flex flex-col items-center justify-center w-full lg:w-2/3 m-auto p-2"

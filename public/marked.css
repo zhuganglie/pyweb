@@ -1,5 +1,13 @@
 /* Markdown Styling */
-
+.container > h1 {
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 1.5rem 0 0.5rem;
+  color: #222;
+  font-size: 2rem;
+  border-bottom: 2px solid #eaeaea;
+  padding-bottom: 0.3rem;
+}
 
 .marked > body {
   font-family: 'Arial', sans-serif;
