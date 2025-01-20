@@ -20,6 +20,7 @@ def root_layout(content, current_path="/"):
       # Create breadcrumb navigation with separators and truncation
       breadcrumbs = Nav(
               Div(
+                  id="breadcrumb-container",
                   *[item for pair in zip(
                       breadcrumb_items,
                       ["/" for _ in range(len(breadcrumb_items)-1)] + [""]
@@ -29,24 +30,57 @@ def root_layout(content, current_path="/"):
               cls="w-full mb-4"
           ) if path_parts else ""
 
+      # Estimate the maximum number of characters allowed in breadcrumbs
+      max_chars = 100  # Adjust this value based on your design and font size
+
+      # Calculate the total number of characters in the breadcrumbs
+      total_chars = sum(len(item.children[0]) for item in breadcrumb_items)
+
+      # Truncate breadcrumbs if necessary
+      if total_chars > max_chars:
+          chars_to_remove = total_chars - max_chars
+          for i in range(len(breadcrumb_items) - 1, 0, -1):
+              item = breadcrumb_items[i]
+              if chars_to_remove <= 0:
+                  break
+              text_len = len(item.children[0])
+              if text_len <= chars_to_remove:
+                  chars_to_remove -= text_len
+                  breadcrumb_items.pop(i)
+              else:
+                  item.children[0] = item.children[0][:-chars_to_remove] + "..."
+                  chars_to_remove = 0
+
+      # Create breadcrumb navigation with separators and truncation
+      breadcrumbs = Nav(
+          Div(
+              *[item for pair in zip(
+                  breadcrumb_items,
+                  ["/" for _ in range(len(breadcrumb_items) - 1)] + [""]
+              ) for item in pair],
+              cls="flex items-center gap-2 text-sm text-gray-600 overflow-hidden whitespace-nowrap"
+          ),
+          cls="w-full mb-4"
+      ) if path_parts else ""
+
       return Main(
-            Header(
-                H1(A("Insights", href="/", cls="no-underline text-black text-3xl lg:text-4xl font-bold")),
-                Nav(
-                    Ul(
-                        Li(A("Home", href="/"), cls="active" if current_path == "/" or current_path.startswith("/posts") else ""),
-                        Li(A("About", href="/about"), cls="active" if current_path.startswith("/about")  else ""),
-                        Li(A("Tags", href="/tags"), cls="active" if current_path.startswith("/tags")  else ""),
-                        cls="list-none flex gap-8"
-                    )
-                ),
-                cls="flex flex-col items-center justify-center p-4 gap-8 mb-8"
-            ),
-            breadcrumbs,
-            content,
-            Footer(
-                P(f"© {datetime.now().year}", B('Insights', cls="mx-5")),
-                cls="flex justify-center p-4"
-            ),
-            cls="flex flex-col items-center justify-center w-full lg:w-2/3 m-auto p-2"
-)
+          Header(
+              H1(A("Insights", href="/", cls="no-underline text-black text-3xl lg:text-4xl font-bold")),
+              Nav(
+                  Ul(
+                      Li(A("Home", href="/"), cls="active" if current_path == "/" or current_path.startswith("/posts") else ""),
+                      Li(A("About", href="/about"), cls="active" if current_path.startswith("/about") else ""),
+                      Li(A("Tags", href="/tags"), cls="active" if current_path.startswith("/tags") else ""),
+                      cls="list-none flex gap-8"
+                  )
+              ),
+              cls="flex flex-col items-center justify-center p-4 gap-8 mb-8"
+          ),
+          breadcrumbs,
+          content,
+          Footer(
+              P(f"© {datetime.now().year}", B('Insights', cls="mx-5")),
+              cls="flex justify-center p-4"
+          ),
+          cls="flex flex-col items-center justify-center w-full lg:w-2/3 m-auto p-4"
+      )

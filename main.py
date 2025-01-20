@@ -4,6 +4,7 @@ from about import get_about_page
 from layout import root_layout
 
 app, rt = fast_app(
+    live=True,
     pico=False,
     hdrs=(
         Link(rel='stylesheet', href='/public/marked.css', type='text/css'),
