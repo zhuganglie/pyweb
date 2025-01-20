@@ -1,4 +1,4 @@
-from fasthtml.common import *
+from fasthtml.common import Main, Header, Footer, Nav, P, B, H1, A, Ul, Li, Div, Span
 from datetime import datetime
 
 def root_layout(content, current_path="/"):
@@ -17,14 +17,18 @@ def root_layout(content, current_path="/"):
           display_text = part.replace('-', ' ').title()
           breadcrumb_items.append(A(display_text, href=current_path_build))
 
-      # Create breadcrumb navigation with separators
+      # Create breadcrumb navigation with separators and truncation
       breadcrumbs = Nav(
-          *[item for pair in zip(
-              breadcrumb_items,
-              ["/" for _ in range(len(breadcrumb_items)-1)] + [""]
-          ) for item in pair],
-          cls="flex gap-2 text-sm text-gray-600 mb-4"
-      ) if path_parts else ""
+              Div(
+                  *[item for pair in zip(
+                      breadcrumb_items,
+                      ["/" for _ in range(len(breadcrumb_items)-1)] + [""]
+                  ) for item in pair],
+                  cls="flex items-center gap-2 text-sm text-gray-600 overflow-hidden whitespace-nowrap"
+              ),
+              cls="w-full mb-4"
+          ) if path_parts else ""
+
       return Main(
             Header(
                 H1(A("Insights", href="/", cls="no-underline text-black text-3xl lg:text-4xl font-bold")),

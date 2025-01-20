@@ -1,4 +1,4 @@
-from fasthtml.common import *
+from fasthtml.common import fast_app, Script, Link, Style, MarkdownJS, HighlightJS, serve
 from blog import get_blog_index, get_post, get_posts_by_tag, get_tag_list
 from about import get_about_page
 from layout import root_layout
