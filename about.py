@@ -1,5 +1,4 @@
-from fasthtml.common import Div, H1, H2, H3, Li, P, Titled, Ul
-from markupsafe import escape
+from fasthtml.common import Div, H2, H3, Li, P, Titled, Ul
 from layout import root_layout
 
 def get_about_page(current_path):
