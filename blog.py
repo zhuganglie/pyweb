@@ -3,7 +3,7 @@ import frontmatter
 from fasthtml.common import *
 from datetime import datetime
 from lucide_fasthtml import Lucide
-from urllib.parse import unquote
+from urllib.parse import unquote, quote
 
 POSTS_DIR = "posts"
 
@@ -73,6 +73,7 @@ def get_tag_list(current_path=None):
     tag_counts = {}
     for post in posts:
         for tag in post['tags']:
-            tag_counts[tag] = tag_counts.get(tag, 0) + 1
-    tag_items = [Li(A(f"{tag} ({tag_counts[tag]})", href=f"/tags/{tag}")) for tag in tags]
+            decoded_tag = unquote(tag)
+            tag_counts[decoded_tag] = tag_counts.get(decoded_tag, 0) + 1
+    tag_items = [Li(A(f"{tag} ({tag_counts[tag]})", href=f"/tags/{quote(tag)}")) for tag in tags]
     return root_layout(Titled("All Tags", Ul(*tag_items, cls="mt-8 flex flex-wrap gap-4 list-none")), current_path if current_path else "/")
