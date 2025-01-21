@@ -1,5 +1,6 @@
 from fasthtml.common import Main, Header, Footer, Nav, P, B, H1, A, Ul, Li, Div, Span
 from datetime import datetime
+from urllib.parse import unquote
 
 def root_layout(content, current_path="/"):
     # Create breadcrumbs based on current_path
@@ -13,8 +14,8 @@ def root_layout(content, current_path="/"):
       # Build the rest of the breadcrumbs
       for part in path_parts:
           current_path_build += f'/{part}'
-          # Capitalize and replace hyphens with spaces for display
-          display_text = part.replace('-', ' ').title()
+          # Decode URL-encoded parts, capitalize, and replace hyphens with spaces for display
+          display_text = unquote(part).replace('-', ' ').title()
           breadcrumb_items.append(A(display_text, href=current_path_build))
 
       # Create breadcrumb navigation with separators and truncation
