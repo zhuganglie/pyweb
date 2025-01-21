@@ -1,3 +1,4 @@
+
 # FastHTML Blog
 
 This project is a simple blog built using the `fasthtml` library. It allows you to create and display blog posts, organize them by tags, and includes an "About" page.
