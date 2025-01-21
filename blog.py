@@ -3,6 +3,7 @@ import frontmatter
 from fasthtml.common import *
 from datetime import datetime
 from lucide_fasthtml import Lucide
+from urllib.parse import unquote
 
 POSTS_DIR = "posts"
 
@@ -53,6 +54,7 @@ def get_post(slug, current_path=None):
     return root_layout(Div(Titled(post['title'], P(date_str, cls="my-4"), Div(post.content, cls="marked"), P(*tags, cls="flex gap-2 my-2"))), current_path if current_path else "/")
 
 def get_posts_by_tag(tag, current_path=None):
+    tag = unquote(tag)
     posts = get_posts()
     tagged_posts = [post for post in posts if tag in post['tags']]
     post_items = [Li(A(post['title'], href=f"/posts/{post['slug']}"), cls="list-disc list-inside mb-2") for post in tagged_posts]
