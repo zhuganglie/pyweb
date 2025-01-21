@@ -4,4 +4,4 @@ python-frontmatter
 pyyaml
 pytz
 lucide-fasthtml
-fasthtml-hf
+
