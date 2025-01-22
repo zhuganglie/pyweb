@@ -66,7 +66,7 @@ def root_layout(content, current_path="/"):
 
       return Main(
           Header(
-              H1(A("YZC", href="/", cls="no-underline text-black text-3xl lg:text-4xl font-bold")),
+              H1(A("YZC", href="/", cls="no-underline text-black text-3xl lg:text-4xl font-extrabold text-shadow-lg")),
               Nav(
                   Ul(
                       Li(A("Home", href="/"), cls="active hover:bg-gray-200 rounded py-1 px-2" if current_path == "/" or current_path.startswith("/posts") else "hover:bg-gray-200 rounded py-1 px-2"),

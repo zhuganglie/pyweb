@@ -8,11 +8,13 @@ app, rt = fast_app(
     pico=False,
     hdrs=(
         Link(rel='stylesheet', href='/public/marked.css', type='text/css'),
+        Link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap", type="text/css"),
         MarkdownJS(),
         HighlightJS(langs=['python', 'javascript', 'html', 'css']),
         Script(src="https://cdn.tailwindcss.com"),
         Style(
             ".active { font-weight: bold;}",
+            "body {font-family: 'Ubuntu', sans-serif;}"
             )
     ))
 
