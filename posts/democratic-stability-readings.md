@@ -7,9 +7,8 @@ tags:
 draft: false
 ---
 
-### **专题阅读:**
 
-下面这些 Readings 从不同方面探讨了民主制度为什么能够稳定运行这个很有意思的问题。
+民主制度为什么能稳定运转？下面这些 Readings 从不同角度探讨了这个问题。
 
 ### 1. **Theoretical Foundations**
 

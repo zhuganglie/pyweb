@@ -69,9 +69,9 @@ def root_layout(content, current_path="/"):
               H1(A("YZC", href="/", cls="no-underline text-black text-3xl lg:text-4xl font-bold")),
               Nav(
                   Ul(
-                      Li(A("Home", href="/"), cls="active" if current_path == "/" or current_path.startswith("/posts") else ""),
-                      Li(A("About", href="/about"), cls="active" if current_path.startswith("/about") else ""),
-                      Li(A("Tags", href="/tags"), cls="active" if current_path.startswith("/tags") else ""),
+                      Li(A("Home", href="/"), cls="active hover:bg-gray-200 rounded py-1 px-2" if current_path == "/" or current_path.startswith("/posts") else "hover:bg-gray-200 rounded py-1 px-2"),
+                      Li(A("About", href="/about"), cls="active  hover:bg-gray-200 rounded py-1 px-2" if current_path.startswith("/about") else " hover:bg-gray-200 rounded py-1 px-2"),
+                      Li(A("Tags", href="/tags"), cls="active  hover:bg-gray-200 rounded py-1 px-2" if current_path.startswith("/tags") else " hover:bg-gray-200 rounded py-1 px-2"),
                       cls="list-none flex gap-8"
                   )
               ),

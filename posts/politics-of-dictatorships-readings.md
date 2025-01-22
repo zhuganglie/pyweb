@@ -8,7 +8,6 @@ draft: false
 ---
 
 
-### **专题阅读:**
 
 #### **Introduction to Authoritarianism**
 

@@ -37,7 +37,7 @@ def get_blog_index(current_path=None):
         date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
         post_items.append(Li(
             P(date_str, cls="mb-2 text-sm "),
-            A(post['title'], href=f"/posts/{post['slug']}", cls="no-underline text-xl"),
+            A(post['title'], href=f"/posts/{post['slug']}", cls="no-underline hover:underline underline-offset-4 text-xl"),
             " ",
             Div( *tags, cls="flex gap-2 mt-2"),
             cls="mb-5 gap-4"
@@ -51,13 +51,13 @@ def get_post(slug, current_path=None):
         return Titled("Post not found", P("Sorry, the post you requested was not found."))
     tags = [A(Lucide("tag", size="15"), f"{tag}", href=f"/tags/{tag}", cls="flex items-center gap-1 ") for tag in post['tags']]
     date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
-    return root_layout(Div(Titled(post['title'], P(date_str, cls="my-4"), Div(post.content, cls="marked"), P(*tags, cls="flex gap-2 my-2"))), current_path if current_path else "/")
+    return root_layout(Div(Titled(post['title'], P(date_str, cls="my-4"), Div(post.content, cls="marked mt-12"), P("Tags:", *tags, cls="flex gap-2 mt-12 mb-8 max-w-max border-gray-900 border-b-2"))), current_path if current_path else "/")
 
 def get_posts_by_tag(tag, current_path=None):
     tag = unquote(tag)
     posts = get_posts()
     tagged_posts = [post for post in posts if tag in post['tags']]
-    post_items = [Li(A(post['title'], href=f"/posts/{post['slug']}"), cls="list-disc list-inside mb-2") for post in tagged_posts]
+    post_items = [Li(A(post['title'], href=f"/posts/{post['slug']}", cls="hover:underline underline-offset-4"), cls="list-disc list-inside mb-2 ") for post in tagged_posts]
     return root_layout(Titled(f"Posts tagged with '{tag}'", Ul(*post_items, cls="mt-8")), current_path if current_path else "/")
 
 def get_all_tags():
