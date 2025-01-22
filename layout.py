@@ -32,7 +32,7 @@ def root_layout(content, current_path="/"):
           ) if path_parts else ""
 
       # Estimate the maximum number of characters allowed in breadcrumbs
-      max_chars = 100  # Adjust this value based on your design and font size
+      max_chars = 30  # Adjust this value based on your design and font size
 
       # Calculate the total number of characters in the breadcrumbs
       total_chars = sum(len(item.children[0]) for item in breadcrumb_items)
@@ -49,7 +49,7 @@ def root_layout(content, current_path="/"):
                   chars_to_remove -= text_len
                   breadcrumb_items.pop(i)
               else:
-                  item.children[0] = item.children[0][:-chars_to_remove] + "..."
+                  item.children = (item.children[0][:-chars_to_remove] + "...",)
                   chars_to_remove = 0
 
       # Create breadcrumb navigation with separators and truncation
