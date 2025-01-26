@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#16213E"/>
+  
+  <!-- Decorative Elements -->
+  <path d="M0 0 L1200 0 L1200 30 Q 600 60, 0 30 Z" fill="#0F3460"/>
+  <path d="M0 630 L1200 630 L1200 600 Q 600 570, 0 600 Z" fill="#0F3460"/>
+  
+  <!-- YZC Logo (centered, scaled up) -->
+  <g transform="translate(400,165) scale(2)">
+    <!-- Y -->
+    <path d="M40 40 L70 80 L100 40 M70 80 L70 160" fill="none" stroke="#E94560" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Z -->
+    <path d="M110 40 L170 40 L110 160 L170 160" fill="none" stroke="#E94560" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- C -->
+    <path d="M170 70 Q140 40 110 70 Q80 100 110 130 Q140 160 170 130" fill="none" stroke="#E94560" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Mascot (scaled down, positioned on the right) -->
+  <g transform="translate(900,230) scale(0.8)">
+    <!-- Head shape -->
+    <ellipse cx="100" cy="100" rx="80" ry="70" fill="#0F3460" stroke="#E94560" stroke-width="4"/>
+    <!-- Ears -->
+    <path d="M30 80 Q 10 40, 50 30" fill="#0F3460" stroke="#E94560" stroke-width="3"/>
+    <path d="M170 80 Q 190 40, 150 30" fill="#0F3460" stroke="#E94560" stroke-width="3"/>
+    <!-- Eyes -->
+    <circle cx="70" cy="80" r="12" fill="#E94560"/>
+    <circle cx="130" cy="80" r="12" fill="#E94560"/>
+    <!-- Eye shine -->
+    <circle cx="73" cy="77" r="4" fill="#FFFFFF"/>
+    <circle cx="133" cy="77" r="4" fill="#FFFFFF"/>
+    <!-- Snout -->
+    <ellipse cx="100" cy="120" rx="30" ry="25" fill="#0F3460" stroke="#E94560" stroke-width="3"/>
+    <!-- Nostrils -->
+    <circle cx="90" cy="120" r="5" fill="#E94560"/>
+    <circle cx="110" cy="120" r="5" fill="#E94560"/>
+  </g>
+</svg>

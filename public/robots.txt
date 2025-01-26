@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /posts/
+Allow: /tags/
+Allow: /about/
+
+# Sitemaps
+Sitemap: https://yzc.vercel.app/sitemap.xml
+
+# Media files
+Allow: /public/images/
+Disallow: /public/images/social/square-template.svg
