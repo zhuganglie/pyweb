@@ -59,10 +59,10 @@ def get_home_page(current_path):
             A(
                 Div(
                     Lucide("landmark", size="24", cls="mb-3"),
-                    "Democratic Institutions",
+                    "Political Institutions",
                     cls="text-center p-6"
                 ),
-                href="/tags/democracy",
+                href="/tags/政治制度",
                 cls="block bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
             ),
             A(
@@ -71,7 +71,7 @@ def get_home_page(current_path):
                     "Political Economy",
                     cls="text-center p-6"
                 ),
-                href="/tags/political-economy",
+                href="/tags/政治经济",
                 cls="block bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
             ),
             A(
@@ -80,7 +80,7 @@ def get_home_page(current_path):
                     "Comparative Politics",
                     cls="text-center p-6"
                 ),
-                href="/tags/comparative-politics",
+                href="/tags/比较政治",
                 cls="block bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
             ),
             cls="grid grid-cols-1 md:grid-cols-3 gap-6"
