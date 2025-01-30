@@ -6,27 +6,27 @@ def get_about_page(current_path):
     #    H1("About This Blog", cls="text-3xl font-bold mb-6"),
 
         Div(
-            P("Welcome! This blog is dedicated to exploring the fundamental questions about our modern way of life and the choices that shape our society." , cls="mb-4"),
+            P("Welcome! This blog is dedicated to exploring interesting political science research that solves real-life puzzles and satisfies your curiosity." , cls="mb-4"),
 
-            P("Here we dive deep into topics like:", cls="mb-2"),
+            P("In this blog, we will explore:", cls="mb-2"),
 
             Ul(
-               Li("The evolution of modern society and technology"),
-               Li("Cultural patterns and their impacts"),
-               Li("Future trends and their implications"),
-               Li("Philosophy and critical thinking about everyday life"),
+               Li("Why democracies rise and fall"),
+               Li("The causes and consequences of dictatorships"),
+               Li("How political institutions shape economic outcomes"),
+               Li("The role of culture and psychology in political behavior"),
             cls="list-disc pl-6 mb-4"
             ),
 
-            P("I believe that understanding why we live the way we do is crucial for making informed decisions about our future, both individually and collectively.", cls="mb-4"),
+            P("I believe that making political science research accessible helps us better understand our society and make more informed decisions as citizens.", cls="mb-4"),
 
             H2("About the Author", cls="text-2xl font-bold mt-8 mb-4"),
 
             P("""
-              I'm a writer and thinker passionate about understanding the underlying
-              patterns that shape our world. With a background in technology and
-              humanities, I bring a multidisciplinary perspective to exploring life's
-              big questions.
+              With a background in political science and experience as a grassroots leader,
+              I enjoy bridging the gap between academic research and everyday politics.
+              This blog is my space to share fascinating political science insights in a
+              way that helps everyone better understand the political world around us.
               """, cls="mb-4"),
 
             P("""
