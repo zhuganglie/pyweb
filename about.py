@@ -36,9 +36,9 @@ def get_about_page(current_path):
 
             Div(
                 H3("Contact", cls="text-xl font-bold mb-2"),
-                P("Email: blog@example.com", cls="mb-2"),
-                P("Twitter: @bloghandle", cls="mb-2"),
-                P("GitHub: github.com/bloghandle"),
+                P("Email: pyrrhonianpig@gmail.com", cls="mb-2"),
+                P("Twitter: @zhugangliet", cls="mb-2"),
+                P("GitHub: github.com/zhuganglie"),
                cls="bg-gray-100 p-6 rounded-lg mt-8",
             ),
          cls="prose max-w-none",
