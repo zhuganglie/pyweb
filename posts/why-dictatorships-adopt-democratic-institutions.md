@@ -77,6 +77,8 @@ Brownlee, J. (2009). Portents of pluralism: How hybrid regimes affect democratic
 
 Cho, J. K. (2015). The politics of reform in South Korea: The role of civil society. Pacific Affairs, 88(1), 31-51.
 
+Jennifer Gandhi， *Political Institutions under Dictatorship*, Cambridge University Press, 2008.
+
 Gandhi, J., & Przeworski, A. (2007). Authoritarian institutions and the survival of autocrats. Comparative Political Studies, 40(11), 1279-1301.
 
 Geddes, B., Wright, J., & Frantz, E. (2018). How dictatorships work: Power, personalization, and collapse. Cambridge University Press.

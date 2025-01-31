@@ -71,8 +71,8 @@ def root_layout(content, current_path="/"):
                   Ul(
                       Li(A("Home", href="/"), cls="active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if current_path == "/" else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"),
                       Li(A("Posts", href="/posts"), cls="active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if current_path.startswith("/posts") else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"),
-                      Li(A("About", href="/about"), cls="active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if current_path.startswith("/about") else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"),
                       Li(A("Tags", href="/tags"), cls="active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if current_path.startswith("/tags") else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"),
+                      Li(A("About", href="/about"), cls="active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if current_path.startswith("/about") else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"),
                       cls="list-none flex gap-2 sm:gap-6 text-base sm:text-lg whitespace-nowrap"
                   )
               ),
