@@ -43,7 +43,8 @@ app, rt = fast_app(
         Style(
             ".active { font-weight: bold;}",
             "body {font-family: 'Ubuntu', sans-serif;}"
-            )
+            ),
+
     ))
 
 @rt("/")
@@ -81,29 +82,29 @@ def sitemap(req):
         return f"<url>{''.join(entry)}</url>"
 
     urls = []
-    
+
     # Add static pages
     urls.append(url_entry("/", changefreq="daily", priority="1.0"))
     urls.append(url_entry("/posts", changefreq="daily", priority="0.9"))
     urls.append(url_entry("/about", changefreq="monthly", priority="0.8"))
     urls.append(url_entry("/tags", changefreq="weekly", priority="0.7"))
-    
+
     # Add all posts
     posts = get_posts()
     for post in posts:
         loc = f"/posts/{post['slug']}"
         lastmod = post.get('date', datetime.now())
         urls.append(url_entry(loc, lastmod=lastmod, changefreq="monthly", priority="0.9"))
-    
+
     # Add all tag pages
     for tag in get_all_tags():
         urls.append(url_entry(f"/tags/{quote(tag)}", changefreq="weekly", priority="0.6"))
-    
+
     sitemap_xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     sitemap_xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     sitemap_xml += '\n'.join(urls)
     sitemap_xml += '\n</urlset>'
-    
+
     return sitemap_xml, {'Content-Type': 'application/xml'}
 
 if __name__ == "__main__":  # Added standard Python idiom
