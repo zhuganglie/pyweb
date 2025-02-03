@@ -77,10 +77,10 @@ def get_home_page(current_path):
             A(
                 Div(
                     Lucide("flag", size="24", cls="mb-3"),
-                    "Comparative Politics",
+                    "Contentious Politics",
                     cls="text-center p-6"
                 ),
-                href="/tags/比较政治",
+                href="/tags/抗争政治",
                 cls="block bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
             ),
             cls="grid grid-cols-1 md:grid-cols-3 gap-6"
