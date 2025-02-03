@@ -87,7 +87,7 @@ draft: false
 
 ----
 
-**Bibliography**
+### 参考资料
 
 Cheng, Edmund W. (2016). "Street Politics in a Hybrid Regime: The Diffusion of Political Activism in Post-colonial Hong Kong." The China Quarterly, 226, 383-406.
 
