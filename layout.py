@@ -64,25 +64,7 @@ def root_layout(content, current_path="/"):
           cls="w-full mb-4"
       ) if path_parts else ""
 
-      import os
-      ga_id = os.environ.get("G-P3PES4S528")
-      ga_script = ""
-      if ga_id:
-          ga_script = f"""
-          <head>
-            <!-- Google tag (gtag.js) -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id={ga_id}"></script>
-            <script>
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){{dataLayer.push(arguments);}}
-              gtag('js', new Date());
-
-              gtag('config', '{ga_id}');
-            </script>
-          </head>
-          """
       return Main(
-          ga_script,
           Header(
               H1(A("YZC", href="/", cls="no-underline text-slate-800 text-3xl lg:text-4xl font-extrabold hover:text-slate-600 transition-colors")),
               Nav(
