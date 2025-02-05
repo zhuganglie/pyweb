@@ -2,87 +2,69 @@ from fasthtml.common import Main, Header, Footer, Nav, P, B, H1, A, Ul, Li, Div,
 from datetime import datetime
 from urllib.parse import unquote
 
+HOME = "Home"
+POSTS = "Posts"
+TAGS = "Tags"
+ABOUT = "About"
+
 def root_layout(content, current_path="/"):
-    # Create breadcrumbs based on current_path
-      path_parts = [p for p in current_path.split('/') if p]
-      breadcrumb_items = []
-      current_path_build = ''
+    """
+    Provides the root layout for all pages.
 
-      # Always start with Home
-      breadcrumb_items.append(A("Home", href="/"))
+    Args:
+        content: The content to be rendered within the layout.
+        current_path: The current path of the page.
 
-      # Build the rest of the breadcrumbs
-      for part in path_parts:
-          current_path_build += f'/{part}'
-          # Decode URL-encoded parts, capitalize, and replace hyphens with spaces for display
-          display_text = unquote(part).replace('-', ' ').title()
-          breadcrumb_items.append(A(display_text, href=current_path_build))
+    Returns:
+        The HTML for the root layout.
+    """
 
-      # Create breadcrumb navigation with separators and truncation
-      breadcrumbs = Nav(
-              Div(
-                  id="breadcrumb-container",
-                  *[item for pair in zip(
-                      breadcrumb_items,
-                      ["/" for _ in range(len(breadcrumb_items)-1)] + [""]
-                  ) for item in pair],
-                  cls="flex items-center gap-2 text-sm text-gray-600 overflow-hidden whitespace-nowrap"
-              ),
-              cls="w-full mb-4"
-          ) if path_parts else ""
+    # Breadcrumb creation
+    path_parts = [p for p in current_path.split('/') if p]
+    breadcrumb_items = [A(HOME, href="/")]  # Always start with Home
+    current_path_build = ''
 
-      # Estimate the maximum number of characters allowed in breadcrumbs
-      max_chars = 30  # Adjust this value based on your design and font size
+    for part in path_parts:
+        current_path_build += f'/{part}'
+        display_text = unquote(part).replace('-', ' ').title()
+        breadcrumb_items.append(A(display_text, href=current_path_build))
 
-      # Calculate the total number of characters in the breadcrumbs
-      total_chars = sum(len(item.children[0]) for item in breadcrumb_items)
+    breadcrumbs = Nav(
+        Div(
+            *[item for pair in zip(
+                breadcrumb_items,
+                ["/" for _ in range(len(breadcrumb_items) - 1)] + [""]
+            ) for item in pair],
+            cls="flex items-center gap-2 text-sm text-gray-600"
+        ),
+        cls="w-full mb-4 truncate"
+    ) if path_parts else ""
 
-      # Truncate breadcrumbs if necessary
-      if total_chars > max_chars:
-          chars_to_remove = total_chars - max_chars
-          for i in range(len(breadcrumb_items) - 1, 0, -1):
-              item = breadcrumb_items[i]
-              if chars_to_remove <= 0:
-                  break
-              text_len = len(item.children[0])
-              if text_len <= chars_to_remove:
-                  chars_to_remove -= text_len
-                  breadcrumb_items.pop(i)
-              else:
-                  item.children = (item.children[0][:-chars_to_remove] + "...",)
-                  chars_to_remove = 0
+    def nav_link(text, href):
+        """Helper function to generate navigation links with conditional 'active' class."""
+        is_active = current_path == href if href == "/" else current_path.startswith(href)
+        classes = "active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if is_active else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"
+        return Li(A(text, href=href, cls=classes))
 
-      # Create breadcrumb navigation with separators and truncation
-      breadcrumbs = Nav(
-          Div(
-              *[item for pair in zip(
-                  breadcrumb_items,
-                  ["/" for _ in range(len(breadcrumb_items) - 1)] + [""]
-              ) for item in pair],
-              cls="flex items-center gap-2 text-sm text-gray-600 overflow-hidden whitespace-nowrap"
-          ),
-          cls="w-full mb-4"
-      ) if path_parts else ""
-
-      return Main(
-          Header(
-              H1(A("YZC", href="/", cls="no-underline text-slate-800 text-3xl lg:text-4xl font-extrabold hover:text-slate-600 transition-colors")),
-              Nav(
-                  Ul(
-                      Li(A("Home", href="/"), cls="active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if current_path == "/" else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"),
-                      Li(A("Posts", href="/posts"), cls="active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if current_path.startswith("/posts") else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"),
-                      Li(A("Tags", href="/tags"), cls="active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if current_path.startswith("/tags") else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"),
-                      Li(A("About", href="/about"), cls="active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if current_path.startswith("/about") else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"),
-                      cls="list-none flex gap-2 sm:gap-6 text-base sm:text-lg whitespace-nowrap"
-                  )
-              ),
-              cls="flex flex-col items-center justify-center py-8 px-4 gap-8 mb-8 border-b border-slate-200"
-          ),
-          breadcrumbs,
-          content,
-          Footer(
-              P(f"© {datetime.now().year}", B('YZC', cls="mx-3 text-slate-700")),
-              cls="flex justify-center py-8 px-4 mt-12 text-slate-500 border-t border-slate-200"
-          ),
-          cls="flex flex-col items-center justify-center w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen bg-white"
-      )
+    return Main(
+        Header(
+            H1(A("YZC", href="/", cls="no-underline text-slate-800 text-3xl lg:text-4xl font-extrabold hover:text-slate-600 transition-colors")),
+            Nav(
+                Ul(
+                    nav_link(HOME, "/"),
+                    nav_link(POSTS, "/posts"),
+                    nav_link(TAGS, "/tags"),
+                    nav_link(ABOUT, "/about"),
+                    cls="list-none flex gap-2 sm:gap-6 text-base sm:text-lg whitespace-nowrap"
+                )
+            ),
+            cls="flex flex-col items-center justify-center py-8 px-4 gap-8 mb-8 border-b border-slate-200"
+        ),
+        breadcrumbs,
+        content,
+        Footer(
+            P(f"© {datetime.now().year}", B('YZC', cls="mx-3 text-slate-700")),
+            cls="flex justify-center py-8 px-4 mt-12 text-slate-500 border-t border-slate-200"
+        ),
+        cls="flex flex-col items-center justify-center w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen bg-white"
+    )
