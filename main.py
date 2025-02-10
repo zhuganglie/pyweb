@@ -7,7 +7,7 @@ from sitemap import generate_sitemap
 
 # SEO Configuration
 site_name = "YZC"
-site_desc = "Insights on comparative politics and political economy"
+site_desc = "Insights feom political science research"
 site_url = "https://yzc.vercel.app"  # Update this to your actual domain
 social_img = "/public/images/social/card-template.svg"
 twitter_creator = "@YZC"  # Update this to your Twitter handle
