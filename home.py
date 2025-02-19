@@ -12,7 +12,7 @@ def get_home_page(current_path):
 
     # Hero Section
     hero = Div(
-        H1("Making Political Science Accessible", cls="text-4xl font-bold text-slate-900 mb-4"),
+        H1("Politics, Made Simple.", cls="text-4xl font-bold text-slate-900 mb-4"),
         P("Explore fascinating research that explains how politics shapes our world",
           cls="text-xl text-slate-600 mb-8"),
         cls="text-center py-16 bg-slate-50 rounded-lg mb-12 px-4"
