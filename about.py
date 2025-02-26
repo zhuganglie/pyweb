@@ -16,7 +16,7 @@ def get_about_page(current_path):
                     cls="relative -mt-16 mb-4"
                 ),
                 H1("About Me", cls="text-3xl font-bold mb-3"),
-                P("A Man with Passion", cls="text-xl text-slate-600 mb-6"),
+                P("A Reader with Passion", cls="text-xl text-slate-600 mb-6"),
                 Div(
                     A(Lucide("mail", size="18"), "pyrrhonianpig@gmail.com",
                       href="mailto:pyrrhonianpig@gmail.com",
