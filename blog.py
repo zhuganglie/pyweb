@@ -303,7 +303,7 @@ def get_post(slug, current_path=None):
                 cls="w-full"
             )
 
-        return root_layout(Titled(post['title'], content), currepath)
+        return root_layout(Titled(post['title'], content), current_path)
 
     tags = [
         A(
@@ -392,29 +392,11 @@ def get_tag_list(current_path=None):
 
     tag_items = [PostView.render_tag_chip(tag, tag_counts.get(tag, 0)) for tag in tags]
 
-    # Group tags by first letter for better organization
-    alphabet = {}
-    for tag in tags:
-        first_letter = tag[0].upper()
-        if first_letter not in alphabet:
-            alphabet[first_letter] = []
-        alphabet[first_letter].append(tag)
-
-    # Create alphabetical sections
-    sections = []
-    for letter, letter_tags in sorted(alphabet.items()):
-        tag_chips = [PostView.render_tag_chip(tag, tag_counts.get(tag, 0)) for tag in sorted(letter_tags)]
-        sections.append(
-            Div(
-                H2(letter, cls="text-2xl font-bold text-slate-800 mb-4"),
-                Ul(*tag_chips, cls="flex flex-wrap gap-3 list-none mb-8"),
-                cls="mb-8"
-            )
-        )
+    tag_items = [PostView.render_tag_chip(tag, tag_counts.get(tag, 0)) for tag in sorted(tags)]
 
     content = Div(
         H1("All Tags", cls="text-3xl font-bold text-slate-800 mb-8"),
-        *sections,
+        Ul(*tag_items, cls="flex flex-wrap gap-3 list-none"),
         cls="w-full"
     )
 
