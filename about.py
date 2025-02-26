@@ -18,13 +18,13 @@ def get_about_page(current_path):
                 H1("About Me", cls="text-3xl font-bold mb-3"),
                 P("A Reader with Passion", cls="text-xl text-slate-600 mb-6"),
                 Div(
-                    A(Lucide("mail", size="18"), "pyrrhonianpig@gmail.com",
+                    A(Lucide("mail", size="18"), "email",
                       href="mailto:pyrrhonianpig@gmail.com",
                       cls="flex items-center gap-2 text-slate-700 hover:text-slate-900"),
-                    A(Lucide("twitter", size="18"), "@zhugangliet",
+                    A(Lucide("twitter", size="18"), "twitter",
                       href="https://twitter.com/zhugangliet",
                       cls="flex items-center gap-2 text-slate-700 hover:text-slate-900"),
-                    A(Lucide("github", size="18"), "github.com/zhuganglie",
+                    A(Lucide("github", size="18"), "github",
                       href="https://github.com/zhuganglie",
                       cls="flex items-center gap-2 text-slate-700 hover:text-slate-900"),
                     cls="flex flex-col sm:flex-row gap-4 sm:gap-6"
@@ -101,21 +101,21 @@ def get_about_page(current_path):
         Div(
             Div(
                 Lucide("mail", size="20", cls="text-slate-600"),
-                A("pyrrhonianpig@gmail.com",
+                A("email",
                   href="mailto:pyrrhonianpig@gmail.com",
                   cls="text-slate-700 hover:text-slate-900"),
                 cls="flex items-center gap-3"
             ),
             Div(
                 Lucide("twitter", size="20", cls="text-slate-600"),
-                A("@zhugangliet",
+                A("twitter",
                   href="https://twitter.com/zhugangliet",
                   cls="text-slate-700 hover:text-slate-900"),
                 cls="flex items-center gap-3"
             ),
             Div(
                 Lucide("github", size="20", cls="text-slate-600"),
-                A("github.com/zhuganglie",
+                A("github",
                   href="https://github.com/zhuganglie",
                   cls="text-slate-700 hover:text-slate-900"),
                 cls="flex items-center gap-3"
