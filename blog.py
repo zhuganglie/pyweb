@@ -241,7 +241,7 @@ def get_blog_index(current_path=None):
     header = Div(
         H1("All Posts", cls="text-3xl font-bold text-slate-800 mb-2"),
         P(f"{len(posts)} article{'' if len(posts) == 1 else 's'}", cls="text-slate-500"),
-        cls="mb-8 pb-4 border-b border-slate-200"
+        cls="mb-8 pb-4 "
     )
 
     content = Div(
@@ -250,7 +250,7 @@ def get_blog_index(current_path=None):
         cls="w-full"
     )
 
-    return root_layout(content, current_path if current_path else "/")
+    return root_layout(Titled("Blog", content), current_path if current_path else "/")
 
 def get_post(slug, current_path=None):
     """Generate a single post page."""
@@ -364,7 +364,7 @@ def get_posts_by_tag(tag, current_path=None):
     header = Div(
         H1(f"Posts tagged with '{tag}'", cls="text-3xl font-bold text-slate-800 mb-2"),
         P(f"{len(tagged_posts)} post{'' if len(tagged_posts) == 1 else 's'}", cls="text-slate-500"),
-        cls="mb-8 pb-4 border-b border-slate-200"
+        cls="mb-8 pb-4 "
     )
 
     content = Div(
