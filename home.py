@@ -1,4 +1,4 @@
-from fasthtml.common import Div, H1, H2, H3, P, A, Span, Section, Article, Button
+from fasthtml.common import Div, H1, H2, H3, P, A, Img, Span, Section, Article, Button
 from layout import root_layout
 from blog import get_posts
 from lucide_fasthtml import Lucide
@@ -111,7 +111,8 @@ def get_home_page(current_path):
         H2("About the Author", cls="text-2xl font-bold text-slate-900 mb-6"),
         Div(
             Div(
-                Div(cls="w-24 h-24 rounded-full bg-slate-200 mb-4 mx-auto md:mx-0"),
+                Img(src="public/images/avatar.jpeg", alt="Profile Photo",
+                     cls="w-24 h-24 rounded-full bg-slate-200 mb-4 mx-auto md:mx-0"),
                 cls="md:w-1/4"
             ),
             Div(
