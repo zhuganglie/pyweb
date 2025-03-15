@@ -115,7 +115,7 @@ def get_home_page(current_path):
                 cls="md:w-1/4"
             ),
             Div(
-                H3("Political Science Reader", cls="text-xl font-bold mb-3"),
+                H3("A Reader with Passion", cls="text-xl font-bold mb-3"),
                 P("Drawing from years of academic research and grassroots experience, I decode complex political concepts and present them in accessible ways. My interests focus on institutional design, political behavior, and comparative government.",
                   cls="text-slate-600 mb-4"),
                 A(
