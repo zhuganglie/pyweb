@@ -39,7 +39,15 @@ class PostMetrics:
         excerpt = next((p.strip() for p in paragraphs if p.strip()), '')
 
         if len(excerpt) > max_length:
-            excerpt = excerpt[:max_length].rsplit(' ', 1)[0] + '...'
+            truncated_excerpt = excerpt[:max_length]
+            # Try to break at the last space
+            last_space_index = truncated_excerpt.rfind(' ')
+            if last_space_index != -1:
+                # If a space is found, truncate there
+                excerpt = truncated_excerpt[:last_space_index] + '...'
+            else:
+                # If no space is found (e.g. very long word), just cut and add ellipsis
+                excerpt = truncated_excerpt + '...'
         return excerpt
 
 class PostRepository:
@@ -106,6 +114,7 @@ class PostRepository:
         return [post for post in PostRepository.get_posts() if tag in post['tags']]
 
     @staticmethod
+    @lru_cache(maxsize=1)
     def get_all_tags():
         """Get a unique set of all tags used in posts."""
         tags = set()
@@ -114,6 +123,7 @@ class PostRepository:
         return sorted(tags)
 
     @staticmethod
+    @lru_cache(maxsize=1)
     def get_tag_counts():
         """Get count of posts for each tag."""
         tag_counts = {}
@@ -144,9 +154,9 @@ class PostView:
         return Li(
             Div(
                 Div(
-                    Span(date_str, cls="text-base font-medium text-slate-500"),
+                    Span(date_str, cls="text-sm font-medium text-slate-500"), # Changed to text-sm
                     Span("•", cls="mx-2 text-slate-400") if date_str else "",
-                    Span(f"{read_time} min read", cls="text-slate-500"),
+                    Span(f"{read_time} min read", cls="text-sm text-slate-500"), # Changed to text-sm
                     cls="flex items-center mb-3"
                 ),
                 A(
@@ -156,9 +166,10 @@ class PostView:
                 ),
                 P(post['excerpt'], cls="text-slate-600 leading-relaxed mb-4"),
                 Div(*tags, cls="flex flex-wrap gap-2"),
-                cls="hover:bg-slate-50 transition-colors p-6 rounded-xl"
+                cls="hover:bg-slate-50 transition-colors p-6 rounded-xl" # This is the card content box
             ),
-            cls="mb-8 border-b border-slate-100 pb-8 last:border-0"
+            # Li provides spacing and border between cards
+            cls="py-6 border-b border-slate-100 last:border-0"
         )
 
     @staticmethod
@@ -217,9 +228,10 @@ class PostView:
             )
 
         return Div(
-            H3("Related Posts", cls="text-xl font-bold mb-4"),
-            Ul(*related_items, cls="divide-y divide-slate-100"),
-            cls="mt-12 pt-8 border-t border-slate-100"
+            H3("Related Posts", cls="text-xl font-bold mb-4 text-slate-800"), # Added text-slate-800
+            Ul(*related_items, cls="divide-y divide-slate-200"), # Darker divide for bg
+            # Added bg-slate-50, adjusted padding, added rounded-lg and shadow
+            cls="mt-12 border-t border-slate-200 pt-8 p-6 bg-slate-50 rounded-lg shadow-sm"
         )
 
 # Page generator functions that use the repository and view classes
@@ -246,7 +258,7 @@ def get_blog_index(current_path=None):
 
     content = Div(
         header,
-        Ul(*post_items, cls="divide-y divide-slate-100"),
+        Ul(*post_items), # Removed divide-y, Li now handles its border
         cls="w-full"
     )
 
@@ -369,7 +381,7 @@ def get_posts_by_tag(tag, current_path=None):
 
     content = Div(
         header,
-        Ul(*post_items, cls="divide-y divide-slate-100"),
+        Ul(*post_items), # Removed divide-y, Li now handles its border
         cls="w-full"
     )
 
@@ -402,9 +414,3 @@ def get_tag_list(current_path=None):
 
     return root_layout(Titled("Tags", content), current_path)
 
-# For backward compatibility with existing code
-def get_posts():
-    return PostRepository.get_posts()
-
-def get_all_tags():
-    return PostRepository.get_all_tags()

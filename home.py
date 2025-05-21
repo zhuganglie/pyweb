@@ -79,7 +79,7 @@ def get_home_page(current_path):
                     cls="text-center p-6"
                 ),
                 href="/tags/政治制度",
-                cls="block bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors hover:shadow-sm"
+                cls="block bg-slate-50 rounded-lg hover:bg-slate-100 hover:shadow-md hover:scale-102 transition-all duration-200 ease-in-out"
             ),
             A(
                 Div(
@@ -89,7 +89,7 @@ def get_home_page(current_path):
                     cls="text-center p-6"
                 ),
                 href="/tags/政治经济",
-                cls="block bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors hover:shadow-sm"
+                cls="block bg-slate-50 rounded-lg hover:bg-slate-100 hover:shadow-md hover:scale-102 transition-all duration-200 ease-in-out"
             ),
             A(
                 Div(
@@ -99,7 +99,7 @@ def get_home_page(current_path):
                     cls="text-center p-6"
                 ),
                 href="/tags/抗争政治",
-                cls="block bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors hover:shadow-sm"
+                cls="block bg-slate-50 rounded-lg hover:bg-slate-100 hover:shadow-md hover:scale-102 transition-all duration-200 ease-in-out"
             ),
             cls="grid grid-cols-1 md:grid-cols-3 gap-6"
         ),
