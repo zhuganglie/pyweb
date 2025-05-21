@@ -1,5 +1,5 @@
-/* Main Container */
-.container {
+/* Main Container for Marked Content (if used standalone) */
+.marked-container {
   max-width: 700px;
   margin: 0 auto;
   padding: 2rem;
@@ -7,8 +7,8 @@
   color: #2c363f;
 }
 
-/* Content Area */
-.container > h1 {
+/* Content Area h1 within marked-container (if used standalone) */
+.marked-container > h1 {
   font-weight: bold;
   line-height: 1.2;
   margin: 2rem 0 1rem;
@@ -18,15 +18,7 @@
   padding-bottom: 0.5rem;
 }
 
-.marked > body {
-  font-family: 'Ubuntu', sans-serif;
-  line-height: 1.7;
-  background-color: #f8fafc;
-  color: #2c363f;
-  margin: 0;
-  padding: 1.5rem;
-}
-
+/* Styles for elements within a .marked class container */
 .marked h1, .marked h2, .marked h3, .marked h4, .marked h5, .marked h6 {
   font-weight: bold;
   line-height: 1.3;
