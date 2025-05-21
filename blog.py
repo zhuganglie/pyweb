@@ -86,7 +86,12 @@ class PostRepository:
 
                 with open(filepath, 'r', encoding='utf-8') as f:
                     try:
-                        post = frontmatter.load(f)
+                        try:
+                            post = frontmatter.load(f)
+                            print(f"Successfully loaded post: {filename}")
+                        except Exception as e:
+                            print(f"Error parsing frontmatter in {filename}: {str(e)}")
+                            raise
                     except Exception as e:
                         error_messages.append(f"Invalid frontmatter in '{filename}': {str(e)}")
                         continue
