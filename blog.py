@@ -62,16 +62,34 @@ class PostRepository:
             return _posts_cache
 
         posts = []
+        error_messages = []
+        
+        # Check posts directory
         if not os.path.exists(POSTS_DIR):
+            error_messages.append(f"Posts directory '{POSTS_DIR}' does not exist")
+            return posts
+
+        # Check directory permissions
+        if not os.access(POSTS_DIR, os.R_OK):
+            error_messages.append(f"Cannot read from posts directory '{POSTS_DIR}': Permission denied")
             return posts
 
         for filename in os.listdir(POSTS_DIR):
             if not filename.endswith(".md"):
                 continue
 
+            filepath = os.path.join(POSTS_DIR, filename)
             try:
-                with open(os.path.join(POSTS_DIR, filename), 'r', encoding='utf-8') as f:
-                    post = frontmatter.load(f)
+                if not os.access(filepath, os.R_OK):
+                    error_messages.append(f"Cannot read file '{filename}': Permission denied")
+                    continue
+
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    try:
+                        post = frontmatter.load(f)
+                    except Exception as e:
+                        error_messages.append(f"Invalid frontmatter in '{filename}': {str(e)}")
+                        continue
 
                     # Process post metadata
                     post['slug'] = filename[:-3]
@@ -82,7 +100,8 @@ class PostRepository:
                     if date:
                         try:
                             post['date'] = datetime.fromisoformat(str(date))
-                        except (ValueError, TypeError):
+                        except (ValueError, TypeError) as e:
+                            error_messages.append(f"Invalid date format in '{filename}': {str(e)}")
                             post['date'] = datetime.min
 
                     # Skip draft posts
@@ -90,12 +109,22 @@ class PostRepository:
                         continue
 
                     # Add computed fields
-                    post['excerpt'] = post.get('excerpt') or PostMetrics.generate_excerpt(post.content)
-                    post['read_time'] = PostMetrics.calculate_read_time(post.content)
+                    try:
+                        post['excerpt'] = post.get('excerpt') or PostMetrics.generate_excerpt(post.content)
+                        post['read_time'] = PostMetrics.calculate_read_time(post.content)
+                    except Exception as e:
+                        error_messages.append(f"Error computing post metrics for '{filename}': {str(e)}")
+                        continue
 
                     posts.append(post)
             except Exception as e:
-                print(f"Error loading post {filename}: {e}")
+                error_messages.append(f"Error processing '{filename}': {str(e)}")
+
+        # Log all errors if any occurred
+        if error_messages:
+            print("\nPost loading errors:")
+            for error in error_messages:
+                print(f"- {error}")
 
         # Sort posts by date, newest first
         posts.sort(key=lambda post: post.get('date', datetime.min), reverse=True)
@@ -278,45 +307,6 @@ def get_post(slug, current_path=None):
         )
         return root_layout(Titled("Post not found", not_found), current_path)
 
-        tags = [
-                A(
-                    Lucide("tag", size="15"),
-                    f"{tag}",
-                    href=f"/tags/{tag}",
-                    cls="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 rounded-full text-slate-700 hover:bg-slate-200 transition-colors"
-                ) for tag in post['tags']
-            ]
-
-        date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
-        read_time = post.get('read_time', 0)
-
-        # Post header with metadata
-        header = Div(
-                H1(post['title'], cls="text-3xl md:text-4xl font-bold mb-4 text-slate-800"),
-                Div(
-                    Span(date_str, cls="text-base font-medium text-slate-500"),
-                    Span("•", cls="mx-2 text-slate-400") if date_str else "",
-                    Span(f"{read_time} min read", cls="text-slate-500"),
-                    cls="flex items-center mb-8"
-                ),
-                cls="mb-8 pb-4 border-b border-slate-100"
-            )
-
-        # Post content
-        content = Div(
-                header,
-                Div(post.content, cls="marked prose prose-slate max-w-none"),
-                Div(
-                    P("Tags", cls="text-sm text-slate-500 mb-3"),
-                    Div(*tags, cls="flex flex-wrap gap-2 mb-8"),
-                    cls="mt-12 pt-8 border-t border-slate-100"
-                ),
-                PostView.render_related_posts(slug),
-                cls="w-full"
-            )
-
-        return root_layout(Titled(post['title'], content), current_path)
-
     tags = [
         A(
             Lucide("tag", size="15"),
@@ -411,6 +401,14 @@ def get_tag_list(current_path=None):
         Ul(*tag_items, cls="flex flex-wrap gap-3 list-none"),
         cls="w-full"
     )
-
     return root_layout(Titled("Tags", content), current_path)
+
+def get_posts():
+    """Get all posts, exposed at module level."""
+    return PostRepository.get_posts()
+
+def get_all_tags():
+    """Get all tags, exposed at module level."""
+    return PostRepository.get_all_tags()
+
 
