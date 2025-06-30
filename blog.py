@@ -327,6 +327,7 @@ def get_post(slug, current_path=None):
     # Post header with metadata
     header = Div(
         H1(post['title'], cls="text-3xl md:text-4xl font-bold mb-4 text-slate-800"),
+        P(post['subtitle'], cls="text-xl text-slate-600 mb-4") if post.get('subtitle') else "",
         Div(
             Span(date_str, cls="text-base font-medium text-slate-500"),
             Span("•", cls="mx-2 text-slate-400") if date_str else "",
