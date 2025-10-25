@@ -9,7 +9,7 @@ def get_about_page(current_path):
             Div(
                 Div(
                     Img(
-                        src="/public/images/avatar.svg",
+                        src="/public/images/avatar.jpg",
                         alt="Profile Photo",
                         cls="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
                     ),

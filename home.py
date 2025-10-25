@@ -111,7 +111,7 @@ def get_home_page(current_path):
         H2("About the Author", cls="text-2xl font-bold text-slate-900 mb-6"),
         Div(
             Div(
-                Img(src="public/images/avatar.jpeg", alt="Profile Photo",
+                Img(src="public/images/avatar.jpg", alt="Profile Photo",
                      cls="w-24 h-24 rounded-full bg-slate-200 mb-4 mx-auto md:mx-0"),
                 cls="md:w-1/4"
             ),
