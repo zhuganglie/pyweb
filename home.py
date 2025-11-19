@@ -130,7 +130,7 @@ def get_home_page(current_path):
     about_section = Section(
         Div(
             Div(
-                Img(src="public/images/avatar.jpg", alt="Profile Photo", loading="lazy",
+                Img(src="images/avatar.jpg", alt="Profile Photo", loading="lazy",
                      cls="w-32 h-32 rounded-full object-cover border-4 border-white dark:border-slate-700 shadow-lg mb-6 md:mb-0 md:mr-8"),
                 cls="flex-shrink-0"
             ),

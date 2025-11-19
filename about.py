@@ -7,7 +7,7 @@ def get_about_page(current_path):
     hero_section = Section(
         Div(
             Img(
-                src="/public/images/avatar.jpg",
+                src="images/avatar.jpg",
                 alt="Profile Photo",
                 loading="lazy",
                 cls="w-48 h-48 rounded-full object-cover border-4 border-white dark:border-slate-800 shadow-2xl mb-8 mx-auto"

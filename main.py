@@ -91,13 +91,13 @@ app, rt = fast_app(
         """),
         Script(src="/public/ui.js"),
         Style(
-            ".glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.3); }",
-            "html.dark .glass { background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }",
+            ".glass { background: rgba(248, 250, 252, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.3); }",
+            "@media (prefers-color-scheme: dark) { .glass { background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid rgba(255, 255, 255, 0.05); } }",
             ".active { font-weight: 600; color: #7c3aed; }",
-            "html.dark .active { color: #a78bfa; }",
+            "@media (prefers-color-scheme: dark) { .active { color: #a78bfa; } }",
             "body { font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }",
             "h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }",
-            "html.dark { color-scheme: dark; }",
+            "@media (prefers-color-scheme: dark) { :root { color-scheme: dark; } }",
             # Screen reader only utility class
             ".sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }",
             # Focus visible improvements
@@ -110,7 +110,7 @@ app, rt = fast_app(
             "button { cursor: pointer; }",
             # Selection color
             "::selection { background-color: #8b5cf6; color: white; }",
-            "html.dark ::selection { background-color: #7c3aed; color: white; }",
+            "@media (prefers-color-scheme: dark) { ::selection { background-color: #7c3aed; color: white; } }",
             # Reduced motion support for accessibility
             "@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }"
             ),
