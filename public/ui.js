@@ -117,3 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Re-initialize on HTMX content swaps
+document.addEventListener('htmx:afterSwap', () => {
+    ThemeManager.setupToggleButton();
+    PageAnimations.init();
+});
