@@ -14,7 +14,7 @@ social_img = "/public/images/social/card-template.svg"
 twitter_creator = "@YZC"  # Update this to your Twitter handle
 
 app, rt = fast_app(
-    live=True,
+    live=False,
     pico=False,
     hdrs=(
         # Google Analytics
