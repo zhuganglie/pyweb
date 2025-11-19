@@ -47,7 +47,7 @@ app, rt = fast_app(
         Script(src="https://cdn.tailwindcss.com"),
         Script("""
             tailwind.config = {
-                darkMode: 'class',
+                darkMode: 'media',
                 theme: {
                     extend: {
                         fontFamily: {

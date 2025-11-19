@@ -47,16 +47,6 @@ def root_layout(content, current_path="/"):
         classes = "active text-primary-600 dark:text-primary-400 font-semibold" if is_active else "text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
         return Li(A(text, href=href, cls=classes))
 
-    # Theme toggle button
-    theme_toggle = Button(
-        Span(Lucide("sun", size="20"), cls="sun-icon hidden"),
-        Span(Lucide("moon", size="20"), cls="moon-icon"),
-        id="theme-toggle",
-        cls="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500",
-        title="Toggle dark mode",
-        **{"aria-label": "Toggle dark mode"}
-    )
-
     # Skip to content link for accessibility
     skip_link = A(
         "Skip to main content",
@@ -81,7 +71,6 @@ def root_layout(content, current_path="/"):
                     cls="hidden md:block"
                 ),
                 Div(
-                    theme_toggle,
                     # Mobile menu button could go here
                     cls="flex items-center gap-2"
                 ),
