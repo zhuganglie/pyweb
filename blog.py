@@ -175,46 +175,50 @@ class PostView:
         """Generate a post card for listings."""
         tags = [
             A(
-                Lucide("tag", size="12"),
-                f"{tag}",
+                f"#{tag}",
                 href=f"/tags/{tag}",
-                cls="flex items-center gap-1.5 text-sm px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                cls="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors mr-3"
             ) for tag in post['tags']
         ]
 
-        date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
+        date_str = post.get('date', '').strftime('%B %d, %Y') if post.get('date') else ''
         read_time = post.get('read_time', 0)
 
         return Li(
-            Div(
+            Article(
                 Div(
-                    Span(date_str, cls="text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors"), # Changed to text-sm
-                    Span("•", cls="mx-2 text-slate-400 dark:text-slate-500") if date_str else "",
-                    Span(f"{read_time} min read", cls="text-sm text-slate-500 dark:text-slate-400 transition-colors"), # Changed to text-sm
-                    cls="flex items-center mb-3"
+                    Div(
+                        Span(date_str, cls="text-sm font-medium text-slate-500 dark:text-slate-400"),
+                        Span("•", cls="mx-2 text-slate-300 dark:text-slate-600"),
+                        Span(f"{read_time} min read", cls="text-sm font-medium text-slate-500 dark:text-slate-400"),
+                        cls="flex items-center mb-3"
+                    ),
+                    A(
+                        H2(post['title'], cls="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-tight"),
+                        href=f"/posts/{post['slug']}",
+                        cls="no-underline block"
+                    ),
+                    P(post['excerpt'], cls="text-slate-600 dark:text-slate-300 leading-relaxed mb-4 line-clamp-3"),
+                    Div(*tags, cls="flex flex-wrap mt-auto"),
+                    cls="flex flex-col h-full p-8"
                 ),
-                A(
-                    post['title'],
-                    href=f"/posts/{post['slug']}",
-                    cls="text-2xl font-bold text-slate-800 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-300 transition-colors no-underline mb-3 block"
-                ),
-                P(post['excerpt'], cls="text-slate-600 dark:text-slate-300 leading-relaxed mb-4 transition-colors"),
-                Div(*tags, cls="flex flex-wrap gap-2"),
-                cls="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors p-6 rounded-xl" # This is the card content box
+                cls="h-full bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 dark:border-slate-700 transition-all duration-300 group hover:-translate-y-1"
             ),
-            # Li provides spacing and border between cards
-            cls="py-6 border-b border-slate-100 dark:border-slate-700 last:border-0 transition-colors"
+            cls="h-full"
         )
 
     @staticmethod
     def render_tag_chip(tag, count=None):
         """Generate a tag chip for the tags page."""
-        tag_text = f"{tag} ({count})" if count is not None else tag
+        tag_text = f"{tag}"
+        count_badge = Span(str(count), cls="ml-2 px-2 py-0.5 text-xs font-bold bg-white dark:bg-slate-800 text-primary-600 dark:text-primary-400 rounded-full") if count is not None else ""
+        
         return Li(
             A(
-                tag_text,
+                Span(tag_text),
+                count_badge,
                 href=f"/tags/{quote(tag)}",
-                cls="inline-flex items-center px-4 py-2 bg-slate-100 dark:bg-slate-700 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                cls="inline-flex items-center px-5 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-700 dark:text-slate-300 hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 hover:shadow-md transition-all duration-300 group"
             )
         )
 
@@ -247,24 +251,26 @@ class PostView:
         # Create related posts section
         related_items = []
         for post, _ in related_posts:
-            date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
+            date_str = post.get('date', '').strftime('%B %d, %Y') if post.get('date') else ''
             related_items.append(
                 Li(
                     A(
                         Div(
-                            P(date_str, cls="text-sm text-slate-500 dark:text-slate-400 mb-1 transition-colors"),
-                            P(post['title'], cls="font-semibold text-slate-800 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"),
+                            P(date_str, cls="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wider"),
+                            H4(post['title'], cls="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-snug"),
+                            cls="p-6 h-full flex flex-col"
                         ),
                         href=f"/posts/{post['slug']}",
-                        cls="block p-4 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors"
-                    )
+                        cls="block h-full bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-lg transition-all duration-300 group"
+                    ),
+                    cls="h-full"
                 )
             )
 
-        return Div(
-            H3("Related Posts", cls="text-xl font-bold mb-4 text-slate-800 dark:text-slate-100 transition-colors"),
-            Ul(*related_items, cls="divide-y divide-slate-200 dark:divide-slate-600 transition-colors"),
-            cls="mt-12 border-t border-slate-200 dark:border-slate-600 pt-8 p-6 bg-slate-50 dark:bg-slate-800 rounded-lg shadow-sm transition-colors"
+        return Section(
+            H3("Read Next", cls="text-2xl font-bold mb-8 text-slate-900 dark:text-white"),
+            Ul(*related_items, cls="grid grid-cols-1 md:grid-cols-3 gap-6"),
+            cls="mt-24 pt-16 border-t border-slate-200 dark:border-slate-800"
         )
 
 # Page generator functions that use the repository and view classes
@@ -273,7 +279,7 @@ def get_blog_index(current_path=None, page: int = 1):
     all_posts = PostRepository.get_posts()
     
     # Pagination settings
-    posts_per_page = 10
+    posts_per_page = 9  # Changed to 9 for 3x3 grid
     total_posts = len(all_posts)
     total_pages = math.ceil(total_posts / posts_per_page)
     
@@ -291,16 +297,16 @@ def get_blog_index(current_path=None, page: int = 1):
             Lucide("file-text", size="48", cls="text-slate-300 dark:text-slate-600 mb-4 transition-colors"),
             H2("No Posts Yet", cls="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors"),
             P("Check back soon for new content.", cls="text-slate-500 dark:text-slate-400 transition-colors"),
-            cls="text-center py-16"
+            cls="text-center py-24"
         )
         return root_layout(empty_state, current_path)
 
     post_items = [PostView.render_post_card(post) for post in current_posts]
 
     header = Div(
-        H1("All Posts", cls="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2 transition-colors"),
-        P(f"{total_posts} article{'' if total_posts == 1 else 's'}", cls="text-slate-500 dark:text-slate-400 transition-colors"),
-        cls="mb-8 pb-4 "
+        H1("All Articles", cls="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight"),
+        P(f"Exploring {total_posts} article{'' if total_posts == 1 else 's'} on political science and society.", cls="text-xl text-slate-600 dark:text-slate-400"),
+        cls="mb-16 text-center max-w-3xl mx-auto"
     )
 
     # Pagination Controls
@@ -309,24 +315,24 @@ def get_blog_index(current_path=None, page: int = 1):
         if page > 1:
             pagination_controls.append(
                 A("← Previous", href=f"/posts?page={page-1}",
-                  cls="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500")
+                  cls="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full hover:border-primary-500 dark:hover:border-primary-500 text-slate-600 dark:text-slate-300 font-medium transition-all hover:-translate-y-0.5 shadow-sm hover:shadow-md")
             )
 
         pagination_controls.append(
-            Span(f"Page {page} of {total_pages}", cls="text-slate-500 dark:text-slate-400 font-medium transition-colors")
+            Span(f"Page {page} of {total_pages}", cls="text-slate-500 dark:text-slate-400 font-medium")
         )
 
         if page < total_pages:
             pagination_controls.append(
                 A("Next →", href=f"/posts?page={page+1}",
-                  cls="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500")
+                  cls="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full hover:border-primary-500 dark:hover:border-primary-500 text-slate-600 dark:text-slate-300 font-medium transition-all hover:-translate-y-0.5 shadow-sm hover:shadow-md")
             )
 
     content = Div(
         header,
-        Ul(*post_items),
-        Div(*pagination_controls, cls="flex justify-center items-center gap-4 mt-12 pt-8 border-t border-slate-100 dark:border-slate-700 transition-colors") if pagination_controls else "",
-        cls="w-full"
+        Ul(*post_items, cls="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"),
+        Div(*pagination_controls, cls="flex justify-center items-center gap-6 mt-16 pt-12 border-t border-slate-200 dark:border-slate-800") if pagination_controls else "",
+        cls="w-full max-w-7xl mx-auto"
     )
 
     return root_layout(Titled("Blog", content), current_path if current_path else "/")
@@ -347,48 +353,43 @@ def get_post(slug, current_path=None):
 
     tags = [
         A(
-            Lucide("tag", size="15"),
-            f"{tag}",
+            f"#{tag}",
             href=f"/tags/{tag}",
-            cls="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-700 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+            cls="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors mr-4"
         ) for tag in post['tags']
     ]
 
-    date_str = post.get('date', '').strftime('%Y-%m-%d') if post.get('date') else ''
+    date_str = post.get('date', '').strftime('%B %d, %Y') if post.get('date') else ''
     read_time = post.get('read_time', 0)
 
     # Post header with metadata
     header = Div(
-        H1(post['title'], cls="text-3xl md:text-4xl font-bold mb-4 text-slate-800 dark:text-slate-100 transition-colors"),
-        P(post['subtitle'], cls="text-xl text-slate-600 dark:text-slate-300 mb-4 transition-colors") if post.get('subtitle') else "",
         Div(
-            Span(date_str, cls="text-base font-medium text-slate-500 dark:text-slate-400 transition-colors"),
-            Span("•", cls="mx-2 text-slate-400 dark:text-slate-500 transition-colors") if date_str else "",
-            Span(f"{read_time} min read", cls="text-slate-500 dark:text-slate-400 transition-colors"),
-            cls="flex items-center mb-8"
+            Span(date_str, cls="font-medium"),
+            Span("•", cls="mx-2 opacity-50"),
+            Span(f"{read_time} min read", cls="font-medium"),
+            cls="flex items-center justify-center text-slate-500 dark:text-slate-400 mb-6 uppercase tracking-wider text-sm"
         ),
-        cls="mb-8 pb-4 border-b border-slate-100 dark:border-slate-700 transition-colors"
+        H1(post['title'], cls="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-slate-900 dark:text-white leading-tight text-center"),
+        P(post['subtitle'], cls="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 text-center leading-relaxed max-w-3xl mx-auto") if post.get('subtitle') else "",
+        Div(*tags, cls="flex flex-wrap justify-center mb-12"),
+        cls="mb-12 pb-12 border-b border-slate-200 dark:border-slate-800"
     )
 
     # Post content
     content = Div(
         header,
-        Div(post.content, cls="marked prose prose-slate max-w-none"),
-        Div(
-            P("Tags", cls="text-sm text-slate-500 dark:text-slate-400 mb-3 transition-colors"),
-            Div(*tags, cls="flex flex-wrap gap-2 mb-8"),
-            cls="mt-12 pt-8 border-t border-slate-100 dark:border-slate-700 transition-colors"
-        ),
+        Div(post.content, cls="marked prose prose-lg prose-slate dark:prose-invert max-w-3xl mx-auto"),
         PostView.render_related_posts(slug),
         Div(
-            P("Share this article:", cls="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 transition-colors"),
+            P("Share this article:", cls="text-sm font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider"),
             Div(
-                A(Lucide("twitter", size="20"), href=f"https://twitter.com/intent/tweet?text={quote(post['title'])}&url={quote(f'https://yzc.vercel.app/posts/{slug}')}", target="_blank", cls="p-2 bg-slate-100 dark:bg-slate-700 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-500 dark:hover:text-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500", **{"aria-label": "Share on Twitter"}),
-                A(Lucide("linkedin", size="20"), href=f"https://www.linkedin.com/sharing/share-offsite/?url={quote(f'https://yzc.vercel.app/posts/{slug}')}", target="_blank", cls="p-2 bg-slate-100 dark:bg-slate-700 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500", **{"aria-label": "Share on LinkedIn"}),
-                A(Lucide("mail", size="20"), href=f"mailto:?subject={quote(post['title'])}&body={quote(f'Check out this article: https://yzc.vercel.app/posts/{slug}')}", cls="p-2 bg-slate-100 dark:bg-slate-700 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500", **{"aria-label": "Share via Email"}),
-                cls="flex gap-3"
+                A(Lucide("twitter", size="20"), href=f"https://twitter.com/intent/tweet?text={quote(post['title'])}&url={quote(f'https://yzc.vercel.app/posts/{slug}')}", target="_blank", cls="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-500 dark:hover:text-blue-400 transition-colors", **{"aria-label": "Share on Twitter"}),
+                A(Lucide("linkedin", size="20"), href=f"https://www.linkedin.com/sharing/share-offsite/?url={quote(f'https://yzc.vercel.app/posts/{slug}')}", target="_blank", cls="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-400 transition-colors", **{"aria-label": "Share on LinkedIn"}),
+                A(Lucide("mail", size="20"), href=f"mailto:?subject={quote(post['title'])}&body={quote(f'Check out this article: https://yzc.vercel.app/posts/{slug}')}", cls="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors", **{"aria-label": "Share via Email"}),
+                cls="flex gap-4"
             ),
-            cls="mt-8 pt-8 border-t border-slate-100 dark:border-slate-700 transition-colors"
+            cls="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col items-center"
         ),
         cls="w-full"
     )
@@ -402,26 +403,27 @@ def get_posts_by_tag(tag, current_path=None):
 
     if not tagged_posts:
         empty_state = Div(
-            Lucide("tag-off", size="48", cls="text-slate-300 dark:text-slate-600 mb-4 transition-colors"),
+            Lucide("tag", size="48", cls="text-slate-300 dark:text-slate-600 mb-4 transition-colors"),
             H2(f"No Posts Tagged '{tag}'", cls="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors"),
             P("This tag has no posts yet, or it may have been removed.", cls="text-slate-500 dark:text-slate-400 mb-6 transition-colors"),
-            A("View All Tags", href="/tags", cls="text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"),
-            cls="text-center py-16"
+            A("View All Tags", href="/tags", cls="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors"),
+            cls="text-center py-24"
         )
         return root_layout(Titled(f"Tag: {tag}", empty_state), current_path )
 
     post_items = [PostView.render_post_card(post) for post in tagged_posts]
 
     header = Div(
-        H1(f"Posts tagged with '{tag}'", cls="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2 transition-colors"),
-        P(f"{len(tagged_posts)} post{'' if len(tagged_posts) == 1 else 's'}", cls="text-slate-500 dark:text-slate-400 transition-colors"),
-        cls="mb-8 pb-4 "
+        Span("Tag", cls="inline-block py-1 px-3 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-semibold mb-4 tracking-wide uppercase"),
+        H1(f"#{tag}", cls="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight"),
+        P(f"{len(tagged_posts)} article{'' if len(tagged_posts) == 1 else 's'} found", cls="text-xl text-slate-600 dark:text-slate-400"),
+        cls="mb-16 text-center"
     )
 
     content = Div(
         header,
-        Ul(*post_items), # Removed divide-y, Li now handles its border
-        cls="w-full"
+        Ul(*post_items, cls="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"),
+        cls="w-full max-w-7xl mx-auto"
     )
 
     return root_layout(Titled(f"Tag: {tag}", content), current_path )
@@ -436,18 +438,20 @@ def get_tag_list(current_path=None):
             Lucide("tags", size="48", cls="text-slate-300 dark:text-slate-600 mb-4 transition-colors"),
             H2("No Tags Yet", cls="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-2 transition-colors"),
             P("Tags will appear here once posts are added.", cls="text-slate-500 dark:text-slate-400 mb-6 transition-colors"),
-            A("View All Posts", href="/posts", cls="text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"),
-            cls="text-center py-16"
+            A("View All Posts", href="/posts", cls="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors"),
+            cls="text-center py-24"
         )
         return root_layout(Titled("Tags", empty_state), current_path)
-
-    tag_items = [PostView.render_tag_chip(tag, tag_counts.get(tag, 0)) for tag in tags]
 
     tag_items = [PostView.render_tag_chip(tag, tag_counts.get(tag, 0)) for tag in sorted(tags)]
 
     content = Div(
-        H1("All Tags", cls="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-8 transition-colors"),
-        Ul(*tag_items, cls="flex flex-wrap gap-3 list-none"),
+        Div(
+            H1("Explore Topics", cls="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight"),
+            P("Browse articles by subject matter.", cls="text-xl text-slate-600 dark:text-slate-400"),
+            cls="mb-16 text-center"
+        ),
+        Ul(*tag_items, cls="flex flex-wrap justify-center gap-4 list-none max-w-4xl mx-auto"),
         cls="w-full"
     )
     return root_layout(Titled("Tags", content), current_path)

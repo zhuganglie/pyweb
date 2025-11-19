@@ -41,7 +41,7 @@ app, rt = fast_app(
         Link(rel='stylesheet', href='/public/marked.css', type='text/css'),
         Link(rel="preconnect", href="https://fonts.googleapis.com"),
         Link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin=True),
-        Link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap", type="text/css"),
+        Link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap", type="text/css"),
         MarkdownJS(),
         HighlightJS(langs=['python', 'javascript', 'html', 'css']),
         Script(src="https://cdn.tailwindcss.com"),
@@ -50,6 +50,38 @@ app, rt = fast_app(
                 darkMode: 'class',
                 theme: {
                     extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                            display: ['Outfit', 'sans-serif'],
+                        },
+                        colors: {
+                            primary: {
+                                50: '#f5f3ff',
+                                100: '#ede9fe',
+                                200: '#ddd6fe',
+                                300: '#c4b5fd',
+                                400: '#a78bfa',
+                                500: '#8b5cf6',
+                                600: '#7c3aed',
+                                700: '#6d28d9',
+                                800: '#5b21b6',
+                                900: '#4c1d95',
+                                950: '#2e1065',
+                            },
+                            secondary: {
+                                50: '#fff1f2',
+                                100: '#ffe4e6',
+                                200: '#fecdd3',
+                                300: '#fda4af',
+                                400: '#fb7185',
+                                500: '#f43f5e',
+                                600: '#e11d48',
+                                700: '#be123c',
+                                800: '#9f1239',
+                                900: '#881337',
+                                950: '#4c0519',
+                            }
+                        },
                         transitionProperty: {
                             'theme': 'background-color, border-color, color, fill, stroke',
                         }
@@ -59,8 +91,12 @@ app, rt = fast_app(
         """),
         Script(src="/public/ui.js"),
         Style(
-            ".active { font-weight: bold;}",
-            "body {font-family: 'Ubuntu', sans-serif; transition: background-color 0.3s ease, color 0.3s ease;}",
+            ".glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.3); }",
+            "html.dark .glass { background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }",
+            ".active { font-weight: 600; color: #7c3aed; }",
+            "html.dark .active { color: #a78bfa; }",
+            "body { font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }",
+            "h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }",
             "html.dark { color-scheme: dark; }",
             # Screen reader only utility class
             ".sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }",
@@ -73,8 +109,8 @@ app, rt = fast_app(
             # Button hover improvements
             "button { cursor: pointer; }",
             # Selection color
-            "::selection { background-color: #818cf8; color: white; }",
-            "html.dark ::selection { background-color: #6366f1; color: white; }",
+            "::selection { background-color: #8b5cf6; color: white; }",
+            "html.dark ::selection { background-color: #7c3aed; color: white; }",
             # Reduced motion support for accessibility
             "@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }"
             ),
