@@ -39,14 +39,44 @@ app, rt = fast_app(
         ),
         # Stylesheets
         Link(rel='stylesheet', href='/public/marked.css', type='text/css'),
+        Link(rel="preconnect", href="https://fonts.googleapis.com"),
+        Link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin=True),
         Link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap", type="text/css"),
         MarkdownJS(),
         HighlightJS(langs=['python', 'javascript', 'html', 'css']),
         Script(src="https://cdn.tailwindcss.com"),
+        Script("""
+            tailwind.config = {
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        transitionProperty: {
+                            'theme': 'background-color, border-color, color, fill, stroke',
+                        }
+                    }
+                }
+            }
+        """),
         Script(src="/public/ui.js"),
         Style(
             ".active { font-weight: bold;}",
-            "body {font-family: 'Ubuntu', sans-serif;}"
+            "body {font-family: 'Ubuntu', sans-serif; transition: background-color 0.3s ease, color 0.3s ease;}",
+            "html.dark { color-scheme: dark; }",
+            # Screen reader only utility class
+            ".sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }",
+            # Focus visible improvements
+            "a:focus-visible, button:focus-visible { outline: 2px solid #6366f1; outline-offset: 2px; border-radius: 4px; }",
+            # Smooth scrolling
+            "html { scroll-behavior: smooth; }",
+            # Loading images
+            "img { image-rendering: auto; }",
+            # Button hover improvements
+            "button { cursor: pointer; }",
+            # Selection color
+            "::selection { background-color: #818cf8; color: white; }",
+            "html.dark ::selection { background-color: #6366f1; color: white; }",
+            # Reduced motion support for accessibility
+            "@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }"
             ),
 
     ))

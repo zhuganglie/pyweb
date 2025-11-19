@@ -36,7 +36,7 @@ def root_layout(content, current_path="/"):
                 breadcrumb_items,
                 ["/" for _ in range(len(breadcrumb_items) - 1)] + [""]
             ) for item in pair],
-            cls="flex items-center gap-2 text-sm text-gray-600"
+            cls="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
         ),
         cls="w-full mb-4 truncate"
     ) if path_parts else ""
@@ -44,13 +44,35 @@ def root_layout(content, current_path="/"):
     def nav_link(text, href):
         """Helper function to generate navigation links with conditional 'active' class."""
         is_active = current_path == href if href == "/" else current_path.startswith(href)
-        classes = "active hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors" if is_active else "hover:bg-slate-100 rounded-lg py-2 px-3 transition-colors"
+        classes = "active hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg py-2 px-3 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500" if is_active else "hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg py-2 px-3 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
         return Li(A(text, href=href, cls=classes))
 
+    # Theme toggle button
+    theme_toggle = Button(
+        Span(Lucide("sun", size="20"), cls="sun-icon hidden"),
+        Span(Lucide("moon", size="20"), cls="moon-icon"),
+        id="theme-toggle",
+        cls="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500",
+        title="Toggle dark mode",
+        **{"aria-label": "Toggle dark mode"}
+    )
+
+    # Skip to content link for accessibility
+    skip_link = A(
+        "Skip to main content",
+        href="#main-content",
+        cls="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-lg focus:shadow-lg transition-all"
+    )
+
     return Main(
-        Div(id="reading-progress", cls="fixed top-0 left-0 h-1 bg-indigo-600 z-50 transition-all duration-300", style="width: 0%"),
+        skip_link,
+        Div(id="reading-progress", cls="fixed top-0 left-0 h-1 bg-indigo-600 dark:bg-indigo-400 z-50 transition-all duration-300", style="width: 0%"),
         Header(
-            H1(A("YZC", href="/", cls="no-underline text-slate-800 text-3xl lg:text-4xl font-extrabold hover:text-slate-600 transition-colors")),
+            Div(
+                H1(A("YZC", href="/", cls="no-underline text-slate-800 dark:text-slate-100 text-3xl lg:text-4xl font-extrabold hover:text-slate-600 dark:hover:text-slate-300 transition-colors")),
+                theme_toggle,
+                cls="flex items-center justify-between w-full max-w-4xl gap-4"
+            ),
             Nav(
                 Ul(
                     nav_link(HOME, "/"),
@@ -60,19 +82,20 @@ def root_layout(content, current_path="/"):
                     cls="list-none flex gap-2 sm:gap-6 text-base sm:text-lg whitespace-nowrap"
                 )
             ),
-            cls="flex flex-col items-center justify-center py-8 px-4 gap-8 mb-8 border-b border-slate-200"
+            cls="flex flex-col items-center justify-center py-8 px-4 gap-8 mb-8 border-b border-slate-200 dark:border-slate-700"
         ),
         breadcrumbs,
-        content,
+        Div(content, id="main-content"),
         Footer(
-            P(f"© {datetime.now().year}", B('YZC', cls="mx-3 text-slate-700")),
-            cls="flex justify-center py-8 px-4 mt-12 text-slate-500 border-t border-slate-200"
+            P(f"© {datetime.now().year}", B('YZC', cls="mx-3 text-slate-700 dark:text-slate-300")),
+            cls="flex justify-center py-8 px-4 mt-12 text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-700"
         ),
         # Back to Top Button
         Button(
             Lucide("arrow-up", size="20"),
             id="back-to-top",
-            cls="fixed bottom-8 right-8 bg-slate-800 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-slate-700 z-50"
+            cls="fixed bottom-8 right-8 bg-slate-800 dark:bg-slate-700 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-slate-700 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 z-50",
+            **{"aria-label": "Back to top"}
         ),
-        cls="flex flex-col items-center justify-center w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen bg-white"
+        cls="flex flex-col items-center justify-center w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen bg-white dark:bg-slate-900 transition-colors"
     )
