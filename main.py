@@ -1,8 +1,9 @@
-from fasthtml.common import fast_app, Script, Link, Style, MarkdownJS, HighlightJS, serve, Socials, Favicon
+from fasthtml.common import fast_app, Script, Link, Style, MarkdownJS, HighlightJS, serve, Socials, Favicon, Response
 from blog import get_blog_index, get_post, get_posts_by_tag, get_tag_list, get_posts, get_all_tags
 from home import get_home_page
 from about import get_about_page
 from sitemap import generate_sitemap
+from feed import generate_rss
 
 
 # SEO Configuration
@@ -42,6 +43,7 @@ app, rt = fast_app(
         MarkdownJS(),
         HighlightJS(langs=['python', 'javascript', 'html', 'css']),
         Script(src="https://cdn.tailwindcss.com"),
+        Script(src="/public/ui.js"),
         Style(
             ".active { font-weight: bold;}",
             "body {font-family: 'Ubuntu', sans-serif;}"
@@ -54,8 +56,8 @@ def index(req):  # Changed function name to be more descriptive
     return get_home_page(req.url.path)
 
 @rt("/posts")
-def blog_index(req):  # Changed function name to be more descriptive
-    return get_blog_index(req.url.path)
+def blog_index(req, page: int = 1):  # Changed function name to be more descriptive
+    return get_blog_index(req.url.path, page)
 
 @rt("/posts/{slug}")
 def get(slug: str, req):  # Changed function name to be more descriptive
@@ -77,6 +79,12 @@ def about(req):
 def sitemap():
     """Generates and returns the sitemap XML."""
     return generate_sitemap(site_url)
+
+@rt("/feed.xml")
+def feed():
+    """Generates and returns the RSS feed."""
+    posts = get_posts()
+    return Response(generate_rss(posts, site_url, site_name, site_desc), headers={"Content-Type": "application/xml"})
 
 if __name__ == "__main__":  # Added standard Python idiom
     serve()

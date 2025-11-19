@@ -1,6 +1,7 @@
-from fasthtml.common import Main, Header, Footer, Nav, P, B, H1, A, Ul, Li, Div, Span
+from fasthtml.common import Main, Header, Footer, Nav, P, B, H1, A, Ul, Li, Div, Span, Button
 from datetime import datetime
 from urllib.parse import unquote
+from lucide_fasthtml import Lucide
 
 HOME = "Home"
 POSTS = "Posts"
@@ -47,6 +48,7 @@ def root_layout(content, current_path="/"):
         return Li(A(text, href=href, cls=classes))
 
     return Main(
+        Div(id="reading-progress", cls="fixed top-0 left-0 h-1 bg-indigo-600 z-50 transition-all duration-300", style="width: 0%"),
         Header(
             H1(A("YZC", href="/", cls="no-underline text-slate-800 text-3xl lg:text-4xl font-extrabold hover:text-slate-600 transition-colors")),
             Nav(
@@ -65,6 +67,12 @@ def root_layout(content, current_path="/"):
         Footer(
             P(f"© {datetime.now().year}", B('YZC', cls="mx-3 text-slate-700")),
             cls="flex justify-center py-8 px-4 mt-12 text-slate-500 border-t border-slate-200"
+        ),
+        # Back to Top Button
+        Button(
+            Lucide("arrow-up", size="20"),
+            id="back-to-top",
+            cls="fixed bottom-8 right-8 bg-slate-800 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-slate-700 z-50"
         ),
         cls="flex flex-col items-center justify-center w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen bg-white"
     )

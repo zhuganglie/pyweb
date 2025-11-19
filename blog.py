@@ -269,11 +269,25 @@ class PostView:
         )
 
 # Page generator functions that use the repository and view classes
-def get_blog_index(current_path=None):
-    """Generate the main blog index page."""
-    posts = PostRepository.get_posts()
+def get_blog_index(current_path=None, page: int = 1):
+    """Generate the main blog index page with pagination."""
+    all_posts = PostRepository.get_posts()
+    
+    # Pagination settings
+    posts_per_page = 10
+    total_posts = len(all_posts)
+    total_pages = math.ceil(total_posts / posts_per_page)
+    
+    # Ensure valid page number
+    if page < 1: page = 1
+    if page > total_pages: page = total_pages
+    
+    # Slice posts for current page
+    start_idx = (page - 1) * posts_per_page
+    end_idx = start_idx + posts_per_page
+    current_posts = all_posts[start_idx:end_idx]
 
-    if not posts:
+    if not current_posts:
         empty_state = Div(
             Lucide("file-text", size="48", cls="text-slate-300 mb-4"),
             H2("No Posts Yet", cls="text-2xl font-bold text-slate-700 mb-2"),
@@ -282,17 +296,37 @@ def get_blog_index(current_path=None):
         )
         return root_layout(empty_state, current_path)
 
-    post_items = [PostView.render_post_card(post) for post in posts]
+    post_items = [PostView.render_post_card(post) for post in current_posts]
 
     header = Div(
         H1("All Posts", cls="text-3xl font-bold text-slate-800 mb-2"),
-        P(f"{len(posts)} article{'' if len(posts) == 1 else 's'}", cls="text-slate-500"),
+        P(f"{total_posts} article{'' if total_posts == 1 else 's'}", cls="text-slate-500"),
         cls="mb-8 pb-4 "
     )
 
+    # Pagination Controls
+    pagination_controls = []
+    if total_pages > 1:
+        if page > 1:
+            pagination_controls.append(
+                A("← Previous", href=f"/posts?page={page-1}", 
+                  cls="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-600 transition-colors")
+            )
+        
+        pagination_controls.append(
+            Span(f"Page {page} of {total_pages}", cls="text-slate-500 font-medium")
+        )
+        
+        if page < total_pages:
+            pagination_controls.append(
+                A("Next →", href=f"/posts?page={page+1}", 
+                  cls="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-600 transition-colors")
+            )
+
     content = Div(
         header,
-        Ul(*post_items), # Removed divide-y, Li now handles its border
+        Ul(*post_items),
+        Div(*pagination_controls, cls="flex justify-center items-center gap-4 mt-12 pt-8 border-t border-slate-100") if pagination_controls else "",
         cls="w-full"
     )
 
@@ -347,6 +381,16 @@ def get_post(slug, current_path=None):
             cls="mt-12 pt-8 border-t border-slate-100"
         ),
         PostView.render_related_posts(slug),
+        Div(
+            P("Share this article:", cls="text-sm font-bold text-slate-700 mb-3"),
+            Div(
+                A(Lucide("twitter", size="20"), href=f"https://twitter.com/intent/tweet?text={quote(post['title'])}&url={quote(f'https://yzc.vercel.app/posts/{slug}')}", target="_blank", cls="p-2 bg-slate-100 rounded-full hover:bg-blue-50 hover:text-blue-500 transition-colors"),
+                A(Lucide("linkedin", size="20"), href=f"https://www.linkedin.com/sharing/share-offsite/?url={quote(f'https://yzc.vercel.app/posts/{slug}')}", target="_blank", cls="p-2 bg-slate-100 rounded-full hover:bg-blue-50 hover:text-blue-700 transition-colors"),
+                A(Lucide("mail", size="20"), href=f"mailto:?subject={quote(post['title'])}&body={quote(f'Check out this article: https://yzc.vercel.app/posts/{slug}')}", cls="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors"),
+                cls="flex gap-3"
+            ),
+            cls="mt-8 pt-8 border-t border-slate-100"
+        ),
         cls="w-full"
     )
 
