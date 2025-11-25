@@ -18,8 +18,8 @@ app, rt = fast_app(
     pico=False,
     hdrs=(
         # Google Analytics
-        Script(src="https://www.googletagmanager.com/gtag/js?id=G-P3PES4S528", async_=True),
-        Script("window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-P3PES4S528');"),
+        #Script(src="https://www.googletagmanager.com/gtag/js?id=G-P3PES4S528", async_=True),
+        #Script("window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-P3PES4S528');"),
         # SEO and Social Media Cards
         Socials(
             title=site_name,
