@@ -1,7 +1,7 @@
 import os
 import re
 import math
-import frontmatter
+import frontmatter as fm
 from fasthtml.common import *
 from datetime import datetime
 from lucide_fasthtml import Lucide
@@ -87,7 +87,7 @@ class PostRepository:
                 with open(filepath, 'r', encoding='utf-8') as f:
                     try:
                         try:
-                            post = frontmatter.load(f)
+                            post = fm.load(f)
                             print(f"Successfully loaded post: {filename}")
                         except Exception as e:
                             print(f"Error parsing frontmatter in {filename}: {str(e)}")
@@ -177,32 +177,32 @@ class PostView:
             A(
                 f"#{tag}",
                 href=f"/tags/{tag}",
-                cls="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors mr-3"
+                cls="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors mr-3"
             ) for tag in post['tags']
         ]
 
-        date_str = post.get('date', '').strftime('%B %d, %Y') if post.get('date') else ''
+        date_str = post.get('date', '').strftime('%Y年%m月%d日') if post.get('date') else ''
         read_time = post.get('read_time', 0)
 
         return Li(
             Article(
                 Div(
                     Div(
-                        Span(date_str, cls="text-sm font-medium text-slate-500 dark:text-slate-400"),
-                        Span("•", cls="mx-2 text-slate-300 dark:text-slate-600"),
-                        Span(f"{read_time} min read", cls="text-sm font-medium text-slate-500 dark:text-slate-400"),
+                        Span(date_str, cls="text-sm text-slate-500 dark:text-slate-500"),
+                        Span("•", cls="mx-2 text-slate-300 dark:text-slate-700"),
+                        Span(f"阅读时间 {read_time} 分钟", cls="text-sm text-slate-500 dark:text-slate-500"),
                         cls="flex items-center mb-3"
                     ),
                     A(
-                        H2(post['title'], cls="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-tight"),
+                        H2(post['title'], cls="text-xl font-bold text-slate-900 dark:text-slate-50 mb-2 group-hover:underline leading-tight"),
                         href=f"/posts/{post['slug']}",
                         cls="no-underline block"
                     ),
-                    P(post['excerpt'], cls="text-slate-600 dark:text-slate-300 leading-relaxed mb-4 line-clamp-3"),
+                    P(post['excerpt'], cls="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3"),
                     Div(*tags, cls="flex flex-wrap mt-auto"),
-                    cls="flex flex-col h-full p-8"
+                    cls="flex flex-col h-full p-6"
                 ),
-                cls="h-full bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 dark:border-slate-700 transition-all duration-300 group hover:-translate-y-1"
+                cls="h-full bg-white dark:bg-[#191919] rounded border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition-colors group"
             ),
             cls="h-full"
         )
@@ -211,14 +211,14 @@ class PostView:
     def render_tag_chip(tag, count=None):
         """Generate a tag chip for the tags page."""
         tag_text = f"{tag}"
-        count_badge = Span(str(count), cls="ml-2 px-2 py-0.5 text-xs font-bold bg-white dark:bg-slate-800 text-primary-600 dark:text-primary-400 rounded-full") if count is not None else ""
+        count_badge = Span(str(count), cls="ml-2 px-2 py-0.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded") if count is not None else ""
         
         return Li(
             A(
                 Span(tag_text),
                 count_badge,
                 href=f"/tags/{quote(tag)}",
-                cls="inline-flex items-center px-5 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-700 dark:text-slate-300 hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 hover:shadow-md transition-all duration-300 group"
+                cls="inline-flex items-center px-4 py-2 bg-white dark:bg-[#191919] border border-slate-200 dark:border-slate-800 rounded text-sm text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-100 transition-colors group"
             )
         )
 
@@ -256,19 +256,19 @@ class PostView:
                 Li(
                     A(
                         Div(
-                            P(date_str, cls="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wider"),
-                            H4(post['title'], cls="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-snug"),
-                            cls="p-6 h-full flex flex-col"
+                            P(date_str, cls="text-xs text-slate-500 dark:text-slate-500 mb-2 uppercase tracking-wider"),
+                            H4(post['title'], cls="text-base font-bold text-slate-900 dark:text-slate-50 group-hover:underline leading-snug"),
+                            cls="p-5 h-full flex flex-col"
                         ),
                         href=f"/posts/{post['slug']}",
-                        cls="block h-full bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-lg transition-all duration-300 group"
+                        cls="block h-full bg-white dark:bg-[#191919] rounded border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition-colors group"
                     ),
                     cls="h-full"
                 )
             )
 
         return Section(
-            H3("Read Next", cls="text-2xl font-bold mb-8 text-slate-900 dark:text-white"),
+            H3("Read Next", cls="text-2xl font-bold mb-8 text-slate-900 dark:text-slate-50"),
             Ul(*related_items, cls="grid grid-cols-1 md:grid-cols-3 gap-6"),
             cls="mt-24 pt-16 border-t border-slate-200 dark:border-slate-800"
         )
@@ -304,9 +304,9 @@ def get_blog_index(current_path=None, page: int = 1):
     post_items = [PostView.render_post_card(post) for post in current_posts]
 
     header = Div(
-        H1("All Articles", cls="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight"),
-        P(f"Exploring {total_posts} article{'' if total_posts == 1 else 's'} on political science and society.", cls="text-xl text-slate-600 dark:text-slate-400"),
-        cls="mb-16 text-center max-w-3xl mx-auto"
+        H1("所有文章", cls="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-2 tracking-tight"),
+        P(f"探索 {total_posts} 篇关于我与 AI 及社会科学旅程的文章。", cls="text-base text-slate-600 dark:text-slate-400"),
+        cls="mb-12 border-b border-slate-100 dark:border-slate-800 pb-8"
     )
 
     # Pagination Controls
@@ -314,18 +314,18 @@ def get_blog_index(current_path=None, page: int = 1):
     if total_pages > 1:
         if page > 1:
             pagination_controls.append(
-                A("← Previous", href=f"/posts?page={page-1}",
-                  cls="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full hover:border-primary-500 dark:hover:border-primary-500 text-slate-600 dark:text-slate-300 font-medium transition-all hover:-translate-y-0.5 shadow-sm hover:shadow-md")
+                A("← 上一页", href=f"/posts?page={page-1}",
+                  cls="px-4 py-2 bg-white dark:bg-[#191919] border border-slate-200 dark:border-slate-800 rounded hover:border-slate-400 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300 font-medium transition-colors text-sm")
             )
 
         pagination_controls.append(
-            Span(f"Page {page} of {total_pages}", cls="text-slate-500 dark:text-slate-400 font-medium")
+            Span(f"{page} / {total_pages}", cls="text-slate-500 dark:text-slate-400 font-medium text-sm px-4")
         )
 
         if page < total_pages:
             pagination_controls.append(
-                A("Next →", href=f"/posts?page={page+1}",
-                  cls="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full hover:border-primary-500 dark:hover:border-primary-500 text-slate-600 dark:text-slate-300 font-medium transition-all hover:-translate-y-0.5 shadow-sm hover:shadow-md")
+                A("下一页 →", href=f"/posts?page={page+1}",
+                  cls="px-4 py-2 bg-white dark:bg-[#191919] border border-slate-200 dark:border-slate-800 rounded hover:border-slate-400 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300 font-medium transition-colors text-sm")
             )
 
     content = Div(
@@ -335,7 +335,7 @@ def get_blog_index(current_path=None, page: int = 1):
         cls="w-full max-w-7xl mx-auto"
     )
 
-    return root_layout(Titled("Blog", content), current_path if current_path else "/")
+    return root_layout(Titled("博客", content), current_path if current_path else "/")
 
 def get_post(slug, current_path=None):
     """Generate a single post page."""
@@ -343,11 +343,10 @@ def get_post(slug, current_path=None):
 
     if not post:
         not_found = Div(
-            Lucide("alert-circle", size="48", cls="text-amber-500 dark:text-amber-400 mb-4 transition-colors"),
-            H1("Post Not Found", cls="text-3xl font-bold mb-4 dark:text-slate-100 transition-colors"),
-            P("The post you're looking for doesn't exist or has been removed.", cls="mb-6 dark:text-slate-300 transition-colors"),
-            A("Back to All Posts", href="/posts", cls="bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"),
-            cls="text-center py-16"
+            H1("Post Not Found", cls="text-2xl font-bold mb-4 text-slate-900 dark:text-slate-100"),
+            P("The post you're looking for doesn't exist or has been removed.", cls="mb-6 text-slate-600 dark:text-slate-400"),
+            A("← Back to All Posts", href="/posts", cls="text-slate-900 dark:text-slate-50 hover:underline font-medium"),
+            cls="py-16"
         )
         return root_layout(Titled("Post not found", not_found), current_path)
 
@@ -355,11 +354,11 @@ def get_post(slug, current_path=None):
         A(
             f"#{tag}",
             href=f"/tags/{tag}",
-            cls="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors mr-4"
+            cls="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors mr-4"
         ) for tag in post['tags']
     ]
 
-    date_str = post.get('date', '').strftime('%B %d, %Y') if post.get('date') else ''
+    date_str = post.get('date', '').strftime('%Y年%m月%d日') if post.get('date') else ''
     read_time = post.get('read_time', 0)
 
     # Post header with metadata
@@ -367,29 +366,42 @@ def get_post(slug, current_path=None):
         Div(
             Span(date_str, cls="font-medium"),
             Span("•", cls="mx-2 opacity-50"),
-            Span(f"{read_time} min read", cls="font-medium"),
-            cls="flex items-center justify-center text-slate-500 dark:text-slate-400 mb-6 uppercase tracking-wider text-sm"
+            Span(f"阅读时间 {read_time} 分钟", cls="font-medium"),
+            cls="flex items-center text-slate-500 dark:text-slate-400 mb-6 tracking-wide text-sm"
         ),
-        H1(post['title'], cls="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-slate-900 dark:text-white leading-tight text-center"),
-        P(post['subtitle'], cls="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 text-center leading-relaxed max-w-3xl mx-auto") if post.get('subtitle') else "",
-        Div(*tags, cls="flex flex-wrap justify-center mb-12"),
-        cls="mb-12 pb-12 border-b border-slate-200 dark:border-slate-800"
+        H1(post['title'], cls="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 dark:text-slate-50 leading-tight"),
+        P(post['subtitle'], cls="text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed max-w-3xl") if post.get('subtitle') else "",
+        Div(*tags, cls="flex flex-wrap mb-10"),
+        cls="mb-10 pb-10 border-b border-slate-100 dark:border-slate-800"
     )
 
     # Post content
     content = Div(
         header,
-        Div(post.content, cls="marked prose prose-lg prose-slate dark:prose-invert max-w-3xl mx-auto"),
+        Div(post.content, cls="marked prose prose-slate dark:prose-invert max-w-3xl"),
         PostView.render_related_posts(slug),
         Div(
-            P("Share this article:", cls="text-sm font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider"),
+            P("分享这篇文章", cls="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-wider"),
             Div(
-                A(Lucide("twitter", size="20"), href=f"https://twitter.com/intent/tweet?text={quote(post['title'])}&url={quote(f'https://yzc.vercel.app/posts/{slug}')}", target="_blank", cls="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-500 dark:hover:text-blue-400 transition-colors", **{"aria-label": "Share on Twitter"}),
-                A(Lucide("linkedin", size="20"), href=f"https://www.linkedin.com/sharing/share-offsite/?url={quote(f'https://yzc.vercel.app/posts/{slug}')}", target="_blank", cls="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-400 transition-colors", **{"aria-label": "Share on LinkedIn"}),
-                A(Lucide("mail", size="20"), href=f"mailto:?subject={quote(post['title'])}&body={quote(f'Check out this article: https://yzc.vercel.app/posts/{slug}')}", cls="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors", **{"aria-label": "Share via Email"}),
-                cls="flex gap-4"
+                A(
+                    # Custom X logo SVG
+                    Svg(
+                        ft("path", d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-9.56-6.638 9.56H.553l8.604-9.834L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.294 19.497h2.039L6.448 3.24H4.26L17.607 20.65z"),
+                        viewBox="0 0 24 24",
+                        width="18",
+                        height="18",
+                        fill="currentColor"
+                    ),
+                    href=f"https://x.com/intent/tweet?text={quote(post['title'])}&url={quote(f'https://yzc.vercel.app/posts/{slug}')}",
+                    target="_blank",
+                    cls="p-2 border border-slate-200 dark:border-slate-800 rounded hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors",
+                    **{"aria-label": "分享到 X (Twitter)"}
+                ),
+                A(Lucide("linkedin", size="18"), href="https://www.linkedin.com/sharing/share-offsite/?url={quote(f'https://yzc.vercel.app/posts/{slug}')}", target="_blank", cls="p-2 border border-slate-200 dark:border-slate-800 rounded hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors", **{"aria-label": "分享到 LinkedIn"}),
+                A(Lucide("mail", size="18"), href=f"mailto:?subject={quote(post['title'])}&body={quote(f'看看这篇文章: https://yzc.vercel.app/posts/{slug}')}", cls="p-2 border border-slate-200 dark:border-slate-800 rounded hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors", **{"aria-label": "通过邮件分享"}),
+                cls="flex gap-3"
             ),
-            cls="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col items-center"
+            cls="mt-16 pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col"
         ),
         cls="w-full"
     )
@@ -415,7 +427,7 @@ def get_posts_by_tag(tag, current_path=None):
 
     header = Div(
         Span("Tag", cls="inline-block py-1 px-3 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-semibold mb-4 tracking-wide uppercase"),
-        H1(f"#{tag}", cls="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight"),
+        H1(f"#{tag}", cls="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-slate-50 mb-4 tracking-tight"),
         P(f"{len(tagged_posts)} article{'' if len(tagged_posts) == 1 else 's'} found", cls="text-xl text-slate-600 dark:text-slate-400"),
         cls="mb-16 text-center"
     )
@@ -447,9 +459,9 @@ def get_tag_list(current_path=None):
 
     content = Div(
         Div(
-            H1("Explore Topics", cls="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight"),
-            P("Browse articles by subject matter.", cls="text-xl text-slate-600 dark:text-slate-400"),
-            cls="mb-16 text-center"
+            H1("探索主题", cls="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-2 tracking-tight"),
+            P("按主题浏览文章。", cls="text-base text-slate-600 dark:text-slate-400"),
+            cls="mb-12 border-b border-slate-100 dark:border-slate-800 pb-8"
         ),
         Ul(*tag_items, cls="flex flex-wrap justify-center gap-4 list-none max-w-4xl mx-auto"),
         cls="w-full"
@@ -464,4 +476,9 @@ def get_all_tags():
     """Get all tags, exposed at module level."""
     return PostRepository.get_all_tags()
 
-
+def get_top_tags(count=3):
+    """Get the most used tags with their counts."""
+    tag_counts = PostRepository.get_tag_counts()
+    # Sort by count descending, then by name
+    sorted_tags = sorted(tag_counts.items(), key=lambda x: (-x[1], x[0]))
+    return sorted_tags[:count]

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>YZC</title>
+    <link>https://yzc.vercel.app</link>
+    <description>探索人工智能如何助力社会科学传播与研究</description>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 26 Apr 2026 16:22:45 +0000</lastBuildDate>
+    <atom:link href="https://yzc.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+        <title>Hello, AI World!</title>
+        <link>https://yzc.vercel.app/posts/hello-world</link>
+        <guid>https://yzc.vercel.app/posts/hello-world</guid>
+        <pubDate>Sun, 26 Apr 2026 10:00:00 +0000</pubDate>
+        <description><![CDATA[How I, a popular social science writer, built this entire blog using Gemini to explore how AI can help in what I do.]]></description>
+    </item>
+    <item>
+        <title>AI 写作的驾驭工程</title>
+        <link>https://yzc.vercel.app/posts/harness-for-writers</link>
+        <guid>https://yzc.vercel.app/posts/harness-for-writers</guid>
+        <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
+        <description><![CDATA[我最近写深度科普的方式，越来越不像"写作"了。]]></description>
+    </item>
+</channel>
+</rss>

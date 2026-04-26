@@ -1,6 +1,6 @@
 from fasthtml.common import Div, H1, H2, H3, P, A, Img, Span, Section, Article, Button
 from layout import root_layout
-from blog import get_posts
+from blog import get_posts, get_top_tags
 from lucide_fasthtml import Lucide
 
 def get_featured_posts(posts, count=3):
@@ -10,38 +10,47 @@ def get_featured_posts(posts, count=3):
 def get_home_page(current_path):
     posts = get_posts()
     featured_posts = get_featured_posts(posts)
+    top_tags = get_top_tags(3)
 
-    # Hero Section with improved design
+    # Tag meta mapping for better visuals
+    tag_meta = {
+        "ai": {"icon": "bot", "desc": "使用 AI 构建工具、网站和工作流"},
+        "social-science": {"icon": "book-open", "desc": "关于 AI 如何影响社会与研究的思考"},
+        "creator": {"icon": "pen-tool", "desc": "将 AI 融入我的创作过程和工作流中"},
+        "software": {"icon": "code", "desc": "系统设计、模式与最佳实践"},
+        "web": {"icon": "layout", "desc": "前端框架、后端 API 与网页设计"},
+        "life": {"icon": "user", "desc": "效率、爱好与随笔"},
+    }
+
+    # Hero Section with Notion-like minimalist design
     hero = Section(
         Div(
-            Span("Welcome to YZC", cls="inline-block py-1 px-3 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-semibold mb-6 tracking-wide uppercase"),
-            H1("Politics, Made Simple.",
-                cls="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight leading-tight"),
-            P("Explore research that explains how politics shapes our world. Decoded for everyone.",
-              cls="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed"),
+            H1("社会科学遇上人工智能。",
+                cls="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-tight"),
+            P("我是一名社会科学普及作家。我使用 Gemini 搭建了这个博客，以探索人工智能如何协助我的研究和工作。",
+              cls="text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-2xl leading-relaxed"),
             Div(
                 Button(
-                    "Browse Articles",
-                    cls="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 px-8 rounded-full transition-all shadow-lg hover:shadow-primary-500/30 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900",
+                    "浏览文章",
+                    cls="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-medium py-2.5 px-6 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-[#191919]",
                     onclick="window.location.href='/posts'"
                 ),
                 Button(
-                    "About Me",
-                    cls="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-semibold py-4 px-8 rounded-full transition-all shadow-md hover:shadow-lg border border-slate-200 dark:border-slate-700 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900",
+                    "关于",
+                    cls="bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-medium py-2.5 px-6 rounded transition-colors border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-[#191919]",
                     onclick="window.location.href='/about'"
                 ),
-                cls="flex flex-col sm:flex-row gap-4 justify-center"
+                cls="flex flex-col sm:flex-row gap-4"
             ),
-            cls="max-w-4xl mx-auto text-center relative z-10"
+            cls="max-w-3xl py-20 md:py-28"
         ),
-        Div(cls="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary-50/50 to-transparent dark:from-primary-900/10 dark:to-transparent -z-10"),
-        cls="relative py-24 md:py-32 px-4 mb-20 overflow-hidden"
+        cls="mb-16 border-b border-slate-100 dark:border-slate-800"
     )
 
-    # Featured Posts Section with improved card design
+    # Featured Posts Section with minimalist card design
     featured_items = []
     for post in featured_posts:
-        date_str = post.get('date', '').strftime('%B %d, %Y') if post.get('date') else ''
+        date_str = post.get('date', '').strftime('%Y年%m月%d日') if post.get('date') else ''
         excerpt = post.get('excerpt', '') or (post.content[:150] + '...' if len(post.content) > 150 else post.content)
         read_time = post.get('read_time', 5)
 
@@ -50,18 +59,17 @@ def get_home_page(current_path):
                 A(
                     Div(
                         Div(
-                            Span("Featured", cls="inline-block text-xs font-bold text-white bg-primary-600 px-2 py-1 rounded mb-3"),
-                            H3(post['title'], cls="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-tight"),
-                            P(excerpt, cls="text-slate-600 dark:text-slate-300 mb-4 line-clamp-3"),
+                            H3(post['title'], cls="text-lg font-semibold text-slate-900 dark:text-white mb-2 group-hover:underline leading-tight"),
+                            P(excerpt, cls="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-2"),
                             Div(
-                                Span(date_str, cls="text-sm font-medium text-slate-500 dark:text-slate-400"),
-                                Span("•", cls="mx-2 text-slate-300 dark:text-slate-600"),
-                                Span(f"{read_time} min read", cls="text-sm font-medium text-slate-500 dark:text-slate-400"),
-                                cls="flex items-center"
+                                Span(date_str, cls="text-xs text-slate-500 dark:text-slate-500"),
+                                Span("•", cls="mx-2 text-slate-300 dark:text-slate-700"),
+                                Span(f"阅读需要 {read_time} 分钟", cls="text-xs text-slate-500 dark:text-slate-500"),
+                                cls="flex items-center mt-auto"
                             ),
-                            cls="p-8"
+                            cls="p-5 flex flex-col h-full"
                         ),
-                        cls="h-full bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 dark:border-slate-700 transition-all duration-300 group hover:-translate-y-1"
+                        cls="h-full bg-white dark:bg-[#191919] rounded border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition-colors group"
                     ),
                     href=f"/posts/{post['slug']}",
                     cls="no-underline block h-full"
@@ -72,82 +80,68 @@ def get_home_page(current_path):
 
     featured_section = Section(
         Div(
-            H2("Featured Insights", cls="text-3xl font-bold text-slate-900 dark:text-white mb-2"),
-            P("Curated articles to get you started.", cls="text-slate-600 dark:text-slate-400 text-lg"),
-            cls="mb-10 text-center"
+            H2("精选见解", cls="text-xl font-bold text-slate-900 dark:text-white mb-6"),
+            cls="mb-6"
         ),
         Div(
             *featured_items,
-            cls="grid grid-cols-1 md:grid-cols-3 gap-8"
+            cls="grid grid-cols-1 md:grid-cols-3 gap-4"
         ),
-        cls="mb-24 max-w-6xl mx-auto px-4"
+        cls="mb-20"
     )
 
-    # Topics Section with visual improvements
+    # Topics Section with dynamic tags
+    topic_items = []
+    for tag_name, count in top_tags:
+        meta = tag_meta.get(tag_name.lower())
+        description = meta["desc"] if meta else f"浏览更多关于 {tag_name} 的文章"
+
+        topic_items.append(
+            A(
+                Div(
+                    H3(tag_name.title(), cls="text-base font-semibold mb-2 text-slate-900 dark:text-white group-hover:underline"),
+                    P(description, cls="text-sm text-slate-600 dark:text-slate-400"),
+                    cls="p-6 h-full flex flex-col justify-center"
+                ),
+                href=f"/tags/{tag_name}",
+                cls="block bg-white dark:bg-[#191919] rounded border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition-colors group"
+            )
+        )
+
     explore = Section(
         Div(
-            H2("Explore Topics", cls="text-3xl font-bold text-slate-900 dark:text-white mb-2"),
-            P("Dive deep into specific areas of political science.", cls="text-slate-600 dark:text-slate-400 text-lg"),
-            cls="mb-10 text-center"
+            H2("探索主题", cls="text-xl font-bold text-slate-900 dark:text-white mb-6"),
+            cls="mb-6"
         ),
         Div(
-            A(
-                Div(
-                    Div(Lucide("landmark", size="32", cls="text-primary-600 dark:text-primary-400"), cls="mb-4 p-3 bg-primary-50 dark:bg-primary-900/30 rounded-xl w-fit"),
-                    H3("Political Institutions", cls="text-xl font-bold mb-2 text-slate-900 dark:text-white"),
-                    P("Understand how governments and political systems function", cls="text-slate-600 dark:text-slate-400"),
-                    cls="p-8 h-full"
-                ),
-                href="/tags/政治制度",
-                cls="block bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-            ),
-            A(
-                Div(
-                    Div(Lucide("scale", size="32", cls="text-secondary-600 dark:text-secondary-400"), cls="mb-4 p-3 bg-secondary-50 dark:bg-secondary-900/30 rounded-xl w-fit"),
-                    H3("Political Economy", cls="text-xl font-bold mb-2 text-slate-900 dark:text-white"),
-                    P("Explore the relationship between politics and economics", cls="text-slate-600 dark:text-slate-400"),
-                    cls="p-8 h-full"
-                ),
-                href="/tags/政治经济",
-                cls="block bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-secondary-200 dark:hover:border-secondary-800 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-            ),
-            A(
-                Div(
-                    Div(Lucide("flag", size="32", cls="text-emerald-600 dark:text-emerald-400"), cls="mb-4 p-3 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl w-fit"),
-                    H3("Contentious Politics", cls="text-xl font-bold mb-2 text-slate-900 dark:text-white"),
-                    P("Learn about protests, revolutions, and social movements", cls="text-slate-600 dark:text-slate-400"),
-                    cls="p-8 h-full"
-                ),
-                href="/tags/抗争政治",
-                cls="block bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-800 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-            ),
-            cls="grid grid-cols-1 md:grid-cols-3 gap-6"
+            *topic_items,
+            cls="grid grid-cols-1 md:grid-cols-3 gap-4"
         ),
-        cls="mb-24 max-w-6xl mx-auto px-4"
+        cls="mb-20"
     )
 
-    # New section: About the Author
+    # About the Author minimalist section
     about_section = Section(
         Div(
             Div(
-                Img(src="images/avatar.jpg", alt="Profile Photo", loading="lazy",
-                     cls="w-32 h-32 rounded-full object-cover border-4 border-white dark:border-slate-700 shadow-lg mb-6 md:mb-0 md:mr-8"),
+                Img(src="/public/images/avatar.jpg", alt="Profile Photo", loading="lazy",
+                     cls="w-20 h-20 rounded object-cover border border-slate-200 dark:border-slate-700 mb-4 md:mb-0 md:mr-6"),
                 cls="flex-shrink-0"
             ),
             Div(
-                H2("About the Author", cls="text-3xl font-bold text-slate-900 dark:text-white mb-4"),
-                P("Drawing from years of academic research and grassroots experience, I decode complex political concepts and present them in accessible ways. My interests focus on institutional design, political behavior, and comparative government.",
-                  cls="text-lg text-slate-600 dark:text-slate-300 mb-6 leading-relaxed"),
+                H2("关于作者", cls="text-xl font-bold text-slate-900 dark:text-white mb-2"),
+                P("我是一名社会科学普及作家与传播者。虽然我没有软件开发背景，但我使用 Gemini 搭建了这个博客，以此探索并记录人工智能如何辅助我的研究、写作和传播过程。",
+                  cls="text-sm text-slate-600 dark:text-slate-300 mb-4 leading-relaxed"),
                 A(
-                    "Read more about me →",
+                    "了解更多 →",
                     href="/about",
-                    cls="inline-flex items-center font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                    cls="inline-flex items-center text-sm font-medium text-slate-900 dark:text-white hover:underline transition-colors"
                 ),
                 cls="flex-grow"
             ),
-            cls="flex flex-col md:flex-row items-center md:items-start bg-slate-50 dark:bg-slate-800/50 rounded-3xl p-8 md:p-12 border border-slate-100 dark:border-slate-700"
+            cls="flex flex-col md:flex-row items-center md:items-start bg-slate-50/50 dark:bg-[#202020] rounded p-6 border border-slate-200 dark:border-slate-800"
         ),
-        cls="mb-24 max-w-5xl mx-auto px-4"
+        cls="mb-20"
     )
 
     content = Div(

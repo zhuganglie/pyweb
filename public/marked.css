@@ -4,33 +4,24 @@
   margin: 0 auto;
   padding: 2rem;
   background-color: #fff;
-  color: #2c363f;
+  color: #37352f;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html.dark .marked-container {
-  background-color: #0f172a;
-  color: #e2e8f0;
-}
-
-/* Content Area h1 within marked-container (if used standalone) */
-.marked-container > h1 {
-  font-weight: bold;
-  line-height: 1.2;
-  margin: 2rem 0 1rem;
-  color: #2c363f;
-  font-size: 2.5rem;
-  border-bottom: 2px solid #e2e8f0;
-  padding-bottom: 0.5rem;
+  background-color: #191919;
+  color: #d4d4d4;
 }
 
 /* Styles for elements within a .marked class container */
 .marked h1, .marked h2, .marked h3, .marked h4, .marked h5, .marked h6 {
-  font-weight: bold;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 600;
   line-height: 1.3;
-  margin: 2rem 0 1rem;
-  color: #2c363f;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  margin: 1.5em 0 0.5em;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  transition: color 0.3s ease;
 }
 
 html.dark .marked h1,
@@ -39,147 +30,118 @@ html.dark .marked h3,
 html.dark .marked h4,
 html.dark .marked h5,
 html.dark .marked h6 {
-  color: #e2e8f0;
+  color: #f8fafc;
 }
 
 .marked h1 {
-  font-size: 2.25rem;
-  border-bottom: 2px solid #e2e8f0;
-  padding-bottom: 0.5rem;
-}
-
-html.dark .marked h1 {
-  border-bottom-color: #475569;
+  font-size: 2rem;
+  margin-top: 0;
 }
 
 .marked h2 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 0.4rem;
-  margin-top: 2.5rem;
+  padding-bottom: 0.3em;
 }
 
 html.dark .marked h2 {
-  border-bottom-color: #475569;
+  border-bottom-color: #334155;
 }
 
 .marked h3 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
+  font-size: 1.25rem;
 }
 
 .marked h4 {
-  font-size: 1.25rem;
-  margin-top: 1.8rem;
-}
-
-.marked h5 {
   font-size: 1.1rem;
-  margin-top: 1.5rem;
-}
-
-.marked h6 {
-  font-size: 1rem;
-  color: #4a5568;
-  margin-top: 1.5rem;
-}
-
-html.dark .marked h6 {
-  color: #94a3b8;
 }
 
 .marked p {
-  margin: 1.2rem 0;
-  line-height: 1.7;
+  margin: 0.8em 0;
+  line-height: 1.6;
   text-align: left;
   transition: color 0.3s ease;
 }
 
-html.dark .marked p {
-  color: #cbd5e1;
-}
-
 .marked a {
-  color: #0369a1;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease, color 0.3s ease;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: opacity 0.2s ease;
 }
 
 .marked a:hover {
-  border-bottom-color: #0369a1;
-}
-
-html.dark .marked a {
-  color: #60a5fa;
-}
-
-html.dark .marked a:hover {
-  border-bottom-color: #60a5fa;
+  opacity: 0.7;
 }
 
 .marked blockquote {
-  margin: 2rem 0;
-  padding: 1rem 1.5rem;
-  border-left: 4px solid #94a3b8;
-  background-color: #f8fafc;
-  font-style: italic;
-  border-radius: 0.25rem;
+  margin: 1.5em 0;
+  padding: 1em 1.5em;
+  border-left: 4px solid #0f172a;
+  background-color: #2d2d2d;
+  font-style: normal;
+  border-radius: 4px;
+  color: #f3f4f6;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 html.dark .marked blockquote {
-  background-color: #1e293b;
-  border-left-color: #64748b;
-  color: #cbd5e1;
+  border-left-color: #f8fafc;
+  background-color: #1a1a1a;
+  color: #f3f4f6;
 }
 
 .marked code {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
-  background-color: #f1f5f9;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  font-size: 0.9rem;
-  color: #2563eb;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background-color: rgba(135,131,120,0.15);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 85%;
+  color: #eb5757;
+  transition: background-color 0.3s ease;
 }
 
 html.dark .marked code {
-  background-color: #334155;
-  color: #93c5fd;
+  background-color: rgba(255,255,255,0.1);
+  color: #ff7b72;
 }
 
 .marked pre {
-  background-color: #1e293b;
-  color: #e2e8f0;
-  padding: 1.25rem;
-  border-radius: 0.5rem;
+  background-color: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 6px;
   overflow-x: auto;
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
-  margin: 1.5rem 0;
+  margin: 1.5em 0;
+  border: 1px solid #333;
   transition: background-color 0.3s ease;
 }
 
 html.dark .marked pre {
-  background-color: #0f172a;
+  background-color: #141414;
+  border-color: #222;
 }
 
 .marked pre code {
   background: none;
-  color: inherit;
+  color: #d4d4d4;
   padding: 0;
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
+html.dark .marked pre code {
+  color: #d4d4d4;
+}
+
 
 .marked ul, .marked ol {
-  margin: 1.2rem 0;
-  padding-left: 2rem;
+  margin: 1em 0;
+  padding-left: 1.5em;
 }
 
 .marked ul li, .marked ol li {
-  margin: 0.5rem 0;
+  margin: 0.3em 0;
   line-height: 1.6;
 }
 
@@ -194,68 +156,43 @@ html.dark .marked pre {
 .marked table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.5rem 0;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  transition: border-color 0.3s ease;
+  margin: 1.5em 0;
 }
 
 .marked table th, .marked table td {
   border: 1px solid #e2e8f0;
-  padding: 0.75rem 1rem;
+  padding: 0.5em 0.75em;
   text-align: left;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 html.dark .marked table th,
 html.dark .marked table td {
-  border-color: #475569;
+  border-color: #334155;
 }
 
 .marked table th {
-  background-color: #f1f5f9;
-  font-weight: bold;
+  background-color: #f7f6f3;
+  font-weight: 600;
 }
 
 html.dark .marked table th {
-  background-color: #1e293b;
-  color: #e2e8f0;
-}
-
-.marked table tr:nth-child(even) {
-  background-color: #f8fafc;
-}
-
-html.dark .marked table tr:nth-child(even) {
-  background-color: #0f172a;
+  background-color: #202020;
 }
 
 .marked hr {
   border: none;
   border-top: 1px solid #e2e8f0;
-  margin: 2.5rem 0;
-  transition: border-color 0.3s ease;
+  margin: 2em 0;
 }
 
 html.dark .marked hr {
-  border-top-color: #475569;
+  border-top-color: #334155;
 }
 
 .marked img {
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 1.5rem auto;
-  border-radius: 0.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  loading: lazy;
-}
-
-.marked img:hover {
-  transform: scale(1.02);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
-
-html.dark .marked img:hover {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  margin: 2em auto;
+  border-radius: 2px;
 }

@@ -8,14 +8,15 @@ from feed import generate_rss
 
 # SEO Configuration
 site_name = "YZC"
-site_desc = "Insights from political science research"
+site_desc = "探索人工智能如何助力社会科学传播与研究"
 site_url = "https://yzc.vercel.app"  # Update this to your actual domain
 social_img = "/public/images/social/card-template.svg"
-twitter_creator = "@YZC"  # Update this to your Twitter handle
+twitter_creator = "@YZC"  # Update this to your X handle
 
 app, rt = fast_app(
     live=False,
     pico=False,
+    html_kw={"lang": "zh-CN"},
     hdrs=(
         # Google Analytics
         #Script(src="https://www.googletagmanager.com/gtag/js?id=G-P3PES4S528", async_=True),
@@ -41,77 +42,109 @@ app, rt = fast_app(
         Link(rel='stylesheet', href='/public/marked.css', type='text/css'),
         Link(rel="preconnect", href="https://fonts.googleapis.com"),
         Link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin=True),
-        Link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap", type="text/css"),
+        Link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap", type="text/css"),
         MarkdownJS(),
+        Link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"),
         HighlightJS(langs=['python', 'javascript', 'html', 'css']),
-        Script(src="https://cdn.tailwindcss.com"),
+        Script(src="https://cdn.tailwindcss.com?plugins=typography"),
         Script("""
             tailwind.config = {
                 darkMode: 'media',
                 theme: {
                     extend: {
                         fontFamily: {
-                            sans: ['Inter', 'sans-serif'],
-                            display: ['Outfit', 'sans-serif'],
+                            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                            display: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
                         },
                         colors: {
                             primary: {
-                                50: '#f5f3ff',
-                                100: '#ede9fe',
-                                200: '#ddd6fe',
-                                300: '#c4b5fd',
-                                400: '#a78bfa',
-                                500: '#8b5cf6',
-                                600: '#7c3aed',
-                                700: '#6d28d9',
-                                800: '#5b21b6',
-                                900: '#4c1d95',
-                                950: '#2e1065',
-                            },
-                            secondary: {
-                                50: '#fff1f2',
-                                100: '#ffe4e6',
-                                200: '#fecdd3',
-                                300: '#fda4af',
-                                400: '#fb7185',
-                                500: '#f43f5e',
-                                600: '#e11d48',
-                                700: '#be123c',
-                                800: '#9f1239',
-                                900: '#881337',
-                                950: '#4c0519',
+                                50: '#f9fafb',
+                                100: '#f1f5f9',
+                                200: '#e2e8f0',
+                                300: '#cbd5e1',
+                                400: '#94a3b8',
+                                500: '#64748b',
+                                600: '#475569',
+                                700: '#334155',
+                                800: '#1e293b',
+                                900: '#0f172a',
+                                950: '#020617',
                             }
                         },
                         transitionProperty: {
                             'theme': 'background-color, border-color, color, fill, stroke',
-                        }
+                        },
+                        typography: {
+                            DEFAULT: {
+                                css: {
+                                    color: '#37352f',
+                                    a: {
+                                        color: 'inherit',
+                                        textDecoration: 'underline',
+                                        textDecorationThickness: '1px',
+                                        textUnderlineOffset: '2px',
+                                        '&:hover': { color: '#0f172a' },
+                                    },
+                                    h1: { color: '#0f172a', fontWeight: '600', letterSpacing: '-0.02em' },
+                                    h2: { color: '#0f172a', fontWeight: '600', letterSpacing: '-0.02em', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.3em' },
+                                    h3: { color: '#0f172a', fontWeight: '600' },
+                                    strong: { color: '#0f172a', fontWeight: '600' },
+                                    code: { color: '#eb5757', backgroundColor: 'rgba(135,131,120,0.15)', padding: '0.2em 0.4em', borderRadius: '3px', fontWeight: '400' },
+                                    'code::before': { content: '""' },
+                                    'code::after': { content: '""' },
+                                    blockquote: { 
+                                        borderLeftColor: '#0f172a', 
+                                        fontStyle: 'normal', 
+                                        color: '#f3f4f6', 
+                                        fontWeight: '450', 
+                                        borderLeftWidth: '4px',
+                                        backgroundColor: '#2d2d2d',
+                                        padding: '1em 1.5em',
+                                        borderRadius: '4px',
+                                    },
+                                    'blockquote p:first-of-type::before': { content: 'none' },
+                                    'blockquote p:last-of-type::after': { content: 'none' },
+                                },
+                            },
+                            invert: {
+                                css: {
+                                    color: '#d4d4d4',
+                                    a: { '&:hover': { color: '#f8fafc' } },
+                                    h1: { color: '#f8fafc' },
+                                    h2: { color: '#f8fafc', borderBottomColor: '#334155' },
+                                    h3: { color: '#f8fafc' },
+                                    strong: { color: '#f8fafc' },
+                                    code: { color: '#ff7b72', backgroundColor: 'rgba(255,255,255,0.1)' },
+                                    blockquote: { 
+                                        borderLeftColor: '#f8fafc', 
+                                        color: '#f3f4f6',
+                                        backgroundColor: '#2d2d2d',
+                                    },
+                                },
+                            },
+                        },
                     }
                 }
             }
         """),
         Script(src="/public/ui.js"),
         Style(
-            ".glass { background: rgba(248, 250, 252, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.3); }",
-            "@media (prefers-color-scheme: dark) { .glass { background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid rgba(255, 255, 255, 0.05); } }",
-            ".active { font-weight: 600; color: #7c3aed; }",
-            "@media (prefers-color-scheme: dark) { .active { color: #a78bfa; } }",
-            "body { font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }",
-            "h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }",
+            ".notion-header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border-bottom: 1px solid #f1f5f9; }",
+            "@media (prefers-color-scheme: dark) { .notion-header { background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid #1e293b; } }",
+            ".active { font-weight: 600; color: #0f172a; }",
+            "@media (prefers-color-scheme: dark) { .active { color: #f8fafc; } }",
+            "body { font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; color: #37352f; background-color: #ffffff; }",
+            "@media (prefers-color-scheme: dark) { body { color: #d4d4d4; background-color: #191919; } }",
+            "h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; font-weight: 700; color: #050505; letter-spacing: -0.02em; }",
+            "@media (prefers-color-scheme: dark) { h1, h2, h3, h4, h5, h6 { color: #ffffff !important; } }",
             "@media (prefers-color-scheme: dark) { :root { color-scheme: dark; } }",
-            # Screen reader only utility class
             ".sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }",
-            # Focus visible improvements
-            "a:focus-visible, button:focus-visible { outline: 2px solid #6366f1; outline-offset: 2px; border-radius: 4px; }",
-            # Smooth scrolling
+            "a:focus-visible, button:focus-visible { outline: 2px solid #94a3b8; outline-offset: 2px; border-radius: 4px; }",
             "html { scroll-behavior: smooth; }",
-            # Loading images
             "img { image-rendering: auto; }",
-            # Button hover improvements
             "button { cursor: pointer; }",
-            # Selection color
-            "::selection { background-color: #8b5cf6; color: white; }",
-            "@media (prefers-color-scheme: dark) { ::selection { background-color: #7c3aed; color: white; } }",
-            # Reduced motion support for accessibility
+            "::selection { background-color: #e2e8f0; color: #0f172a; }",
+            "@media (prefers-color-scheme: dark) { ::selection { background-color: #334155; color: #f8fafc; } }",
             "@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }"
             ),
 
@@ -141,12 +174,12 @@ def tag_list(req):  # Changed function name to be more descriptive
 def about(req):
     return get_about_page(req.url.path)
 
-@rt("/sitemap.xml")
+@rt("/sitemap")
 def sitemap():
     """Generates and returns the sitemap XML."""
     return generate_sitemap(site_url)
 
-@rt("/feed.xml")
+@rt("/feed")
 def feed():
     """Generates and returns the RSS feed."""
     posts = get_posts()

@@ -2,7 +2,7 @@ from fasthtml.common import *
 from datetime import datetime
 import pytz
 
-def generate_rss(posts, site_url="https://yzc.vercel.app", site_title="YZC", site_desc="Insights from political science research"):
+def generate_rss(posts, site_url="https://yzc.vercel.app", site_title="YZC", site_desc="探索人工智能如何助力社会科学传播与研究"):
     """Generates an RSS 2.0 feed."""
     
     rss_template = """<?xml version="1.0" encoding="UTF-8" ?>
@@ -11,7 +11,7 @@ def generate_rss(posts, site_url="https://yzc.vercel.app", site_title="YZC", sit
     <title>{title}</title>
     <link>{site_url}</link>
     <description>{description}</description>
-    <language>en-us</language>
+    <language>zh-cn</language>
     <lastBuildDate>{build_date}</lastBuildDate>
     <atom:link href="{site_url}/feed.xml" rel="self" type="application/rss+xml" />
     {items}
