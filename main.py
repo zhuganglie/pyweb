@@ -13,7 +13,7 @@ site_url = "https://yzc.vercel.app"  # Update this to your actual domain
 social_img = "/public/images/social/card-template.svg"
 twitter_creator = "@YZC"  # Update this to your X handle
 
-app, rt = fast_app(
+_fast_app_res = fast_app(
     live=False,
     pico=False,
     html_kw={"lang": "zh-CN"},
@@ -149,6 +149,9 @@ app, rt = fast_app(
             ),
 
     ))
+
+app = _fast_app_res[0]
+rt = _fast_app_res[1]
 
 @rt("/")
 def index(req):  # Changed function name to be more descriptive
