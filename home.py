@@ -25,7 +25,7 @@ def get_home_page(current_path):
     # Hero Section with Notion-like minimalist design
     hero = Section(
         Div(
-            H1("社会科学遇上人工智能。",
+            H1("社会科学遇上人工智能",
                 cls="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-tight"),
             P("我是一名社会科学普及作家。我使用 Gemini 搭建了这个博客，以探索人工智能如何协助我的研究和工作。",
               cls="text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-2xl leading-relaxed"),
